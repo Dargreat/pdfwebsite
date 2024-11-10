@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Navbar Example</title>
+  <link rel="stylesheet" href="pdf.css">
+  <script src="pdf.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> <!-- Font Awesome for Icons -->
+</head>
+<body>
+
+<section class="home" id="home">
+  <nav class="navbar">
+    <div class="logo">
+      <img src="logo.png" alt="Logo" height="40"> <!-- Replace with your logo -->
+    </div>
+    <div class="menu">
+      <ul>
+        <a href="#home">Home</a>
+        <a href="#faq-container">FAQs</a>
+      <a href="#how-it-works">How it Works</a>
+        <a href="#browse-pdfs">Browse PDFs</a>
+        <a href="#get-in-touch">Contact</a>
+        <a href="#blog">Blog</a>
+      </ul>
+    </div>
+  </nav>
+
+  <h1 class="bigtext">EKSU BRO</h1>
+  <h3 class="smalltext">pastquestions . blog . web3</h3>
+
+  <!-- Search Bar Section -->
+  <div class="search-container">
+    <div class="search-bar-container">
+      <input class="search-bar" type="text" id="searchQuery" placeholder="Browse PDFs...">
+      <button class="search-button" onclick="searchPDFs()">Search</button>
+    </div>
+  </div>
+</section>
+
+<!-- Available Subjects Section -->
+<section class="avbsub">
+  <h1>Browse Faculty</h1>
+  <h5>Past questions are available for all the faculties listed below</h5>
+  <pre><b>
+1. Faculty of Arts                    3. Faculty of Science
+
+2. Faculty of Education               4. Faculty of Social Sciences
+
+5. Faculty of Law                      6. Faculty of Engineering
+
+7. Faculty of Health Sciences         8. Faculty of Management Sciences
+
+9. Faculty of Agricultural Sciences
+  </b></pre>
+</section>
+
+<section class="how-it-works" id="how-it-works">
+  <h1>How It Works</h1>
+  
+  <div class="steps">
+    <!-- Container for all icons and lines -->
+    <div class="icon-container">
+      <!-- First Icon: Search -->
+      <div class="step">
+        <div class="icon-box">
+          <i class="fas fa-search"></i>
+        </div>
+        <div class="text-box">
+          <b><p>Search for PDF with course code</p></b>
+        </div>
+      </div>
+
+      <!-- Line below search icon -->
+      <div class="line"></div>
+
+      <!-- Second Icon: Download -->
+      <div class="step">
+        <div class="icon-box">
+          <i class="fas fa-download"></i>
+        </div>
+        <div class="text-box">
+          <b><p>Download preferred PDF</p></b>
+        </div>
+      </div>
+
+      <!-- Line below download icon -->
+      <div class="line"></div>
+
+      <!-- Third Icon: Book -->
+      <div class="step">
+        <div class="icon-box">
+          <i class="fas fa-book"></i>
+        </div>
+        <div class="text-box">
+         <b><p>Read your PDF</p></b>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!--faq-->
+<div class="faq-container" id="faq-container">
+  <div class="faq-left">
+    <div class="faq-header">Frequently Asked Questions</div>
+    <img src="Faq.png" alt="FAQ Image" class="faq-image">
+  </div>
+
+  <div class="faq-right">
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleAnswer(this)">
+        Who is Eksu Bro?
+        <span class="arrow">▼</span>
+      </div>
+      <div class="faq-answer">
+        Eksu bro is the number 1 leading entertainment TV/blogger in Eksu. He focuses on memes, finance, blogging, and so much more...
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleAnswer(this)">
+        How to find a past question?
+        <span class="arrow">▼</span>
+      </div>
+      <div class="faq-answer">
+        Search for the required past question with the course code and download it.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleAnswer(this)">
+        Do I need to pay?
+        <span class="arrow">▼</span>
+      </div>
+      <div class="faq-answer">
+        NO, all PDFs and past questions here are completely free.
+      </div>
+    </div>
+  </div>
+</div>
+
+<section class="get-in-touch" id="get-in-touch">
+  <h2>Get in Touch</h2>
+  <p>Need help navigating the website? Reach out to us on WhatsApp.</p>
+  
+  <!-- WhatsApp link to contact eksu bro -->
+  <div class="contact-info">
+    <a href="https://wa.me/2348155975073?text=Hi%20eksu%20bro%20I%20need%20help%20navigating%20your%20website" target="_blank" class="whatsapp-link">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp Icon" class="whatsapp-icon">
+      +234 815 597 5073
+    </a>
+  </div>
+  
+  <!-- Button to contact website designer -->
+  <div class="contact-designer">
+    <a href="https://wa.me/2348168951209?text=Hello%20I%20got%20your%20number%20from%20eksu%20bro%20I%20need%20a%20website" target="_blank" class="designer-button">
+      Contact Website Designer?
+    </a>
+  </div>
+
+  <!-- Footer with creator info -->
+  <div class="footer-credit">
+    Created with <span class="heart">❤️</span> by <strong>Dar Great Designs</strong>
+  </div>
+</section>
+
+<!-- Footer Navigation Section -->
+<footer class="footer-nav">
+  <nav>
+    <ul>
+      <li><a href="#home">Home</a></li>
+      <li><a href="#faq-container">FAQs</a></li>
+      <li><a href="#how-it-works">How it Works</a></li>
+      <li><a href="#browse-pdfs">Browse PDFs</a></li>
+      <li><a href="#get-in-touch">Contact</a></li>
+      <li><a href="#blog">Blog</a></li>
+    </ul>
+  </nav>
+</footer>
+
+</body>
+</html>

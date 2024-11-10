@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Navbar Example</title>
+  <link rel="stylesheet" href="browse.css">
+  <script src="pdf.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> <!-- Font Awesome for Icons -->
+</head>
+<body>
+
+<section class="home" id="home">
+  <nav class="navbar">
+    <div class="logo">
+      <img src="logo.png" alt="Logo" height="40"> <!-- Replace with your logo -->
+    </div>
+    <div class="menu">
+      <ul>
+        <a href="#home">Home</a>
+        <a href="#faq-container">FAQs</a>
+        <a href="#how-it-works">How it Works</a>
+        <a href="#browse-pdfs">Browse PDFs</a>
+        <a href="#get-in-touch">Contact</a>
+        <a href="#blog">Blog</a>
+      </ul>
+    </div>
+  </nav>
+  <h1 class="bigtext">EKSU BRO</h1>
+  <h3 class="smalltext">pastquestions . blog . web3</h3>
+</section>
+
+<!-- Browse PDFs Section -->
+<section class="browse-pdfs" id="browse-pdfs">
+  <h1 class="browse-title">Browse PDFs</h1>
+
+  <!-- Search Bar -->
+  <section class="search-section">
+    <input type="text" id="search-bar" placeholder="Search PDFs..." oninput="searchPDFs()">
+  </section>
+  
+  <h5>This are the list of available PDFs</h5>
+
+  <!-- PDF List -->
+  <section id="pdf-list">
+    <!-- PDF items will be dynamically added here by JavaScript -->
+  </section>
+
+</section>
+
+<script src="browse.js"></script> <!-- JavaScript file -->
+</body>
+</html>
+

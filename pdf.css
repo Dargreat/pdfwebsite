@@ -1,0 +1,400 @@
+/* General Body Styling */
+body {
+  font-family: 'Roboto', Arial, sans-serif; /* Using Google Font for a modern look */
+  margin: 0;
+  padding: 0;
+  color: #333; /* Default text color for better contrast */
+  line-height: 1.6; /* Better line spacing */
+}
+
+.home{
+    min-height:100vh;
+    width:100%;
+    background-position: center;
+    background-size: cover;
+    position: relative;
+  background-color: rgba(13, 172, 119, 0.938); /* Green background color */
+}
+
+/* Navbar Styling */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 30px; /* Slightly larger padding for a more spacious look */
+  border-radius: 8px; /* Rounded corners for a smoother look */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Slight shadow for depth */
+}
+
+/* Logo Styling */
+.navbar .logo {
+  font-size: 28px; /* Larger font size for logo */
+  color: white; /* White color for better contrast */
+  font-weight: bold;
+  letter-spacing: 1px; /* Spacing between letters for a clean look */
+}
+
+/* Menu Styling */
+.navbar .menu {
+  display: flex;
+  gap: 30px; /* Increased spacing between menu items */
+}
+
+.navbar .menu a {
+  color: white;
+  text-decoration: none;
+  font-size: 18px; /* Slightly larger font size */
+  padding: 10px 20px; /* Increased padding for better clickability */
+  border-radius: 4px;
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Added transform effect for a smoother hover */
+}
+
+.navbar .menu a:hover {
+  background-color: white;
+  color: #333; /* Dark text on hover for contrast */
+  transform: scale(1.05); /* Slightly increase size on hover for interaction feedback */
+}
+
+/* Big Text Styling */
+.bigtext {
+  color: white;
+  margin-top: 150px; /* Adjusted top margin for balance */
+  text-align: center;
+  font-size: 80px; /* Larger font size for a more striking heading */
+  font-weight: bold;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); /* Shadow for text to make it pop */
+  margin-bottom: 0px;
+}
+
+/* Small Text Styling */
+.smalltext {
+  color: white; /* Changed to white for consistency */
+  text-align: center;
+  font-size: 20px; /* Slightly larger font for better readability */
+  font-weight: 300; /* Lighter weight for contrast with the big text */
+  margin-top: 5px;
+}
+
+/* Search Bar Styling */
+.search-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+.search-bar-container {
+  display: flex;
+  width: 60%; /* Adjust width as needed */
+  border-radius: 25px; /* Rounded edges for the whole container */
+  overflow: hidden; /* To ensure the button stays inside */
+}
+
+.search-bar {
+  flex: 1;
+  padding: 10px;
+  font-size: 18px;
+  border: none;
+  outline: none;
+  color: #333;
+}
+
+.search-bar:focus {
+  border-color: #007BFF;
+}
+
+.search-button {
+  padding: 10px 20px;
+  background-color: rgba(13, 172, 119, 0.938);
+  color: white;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  border-radius: 0 25px 25px 0; /* Rounded right edges */
+  transition: background-color 0.3s ease;
+}
+
+.search-button:hover {
+  background-color: #008C68;
+}
+
+.avbsub h1{
+  font-size: 45px;
+  margin-bottom: 0%;
+  text-align: center;
+}
+
+.avbsub h5{
+  text-align: center;
+  margin-top: 0%;
+  font-size: 15px;
+}
+
+.avbsub pre{
+  text-align: center;
+  font-size: 15px;
+}
+
+/* Container for the section */
+.how-it-works {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 30px;
+  flex-direction: column;
+}
+
+/* Header */
+h1 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+/* Steps container: Flexbox layout */
+.steps {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+}
+
+
+/* Icon and Text grouping */
+.step {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 20px; /* Space between steps */
+}
+
+/* Icon box styling */
+.icon-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 30px;
+  padding: 20px;
+  border-radius: 50%;
+  border: 2px solid green;
+  color: white;
+  background-color: green;
+  margin-right: 20px; /* Space between icon and text */
+}
+
+/* Text beside icons */
+.text-box {
+  max-width: 250px; /* Limit the text width */
+  text-align: left;
+}
+
+/* Line under the icons */
+.line {
+  width: 2px;
+  height: 40px; /* Adjust the line height to be between icons */
+  background-color: green;
+  margin-left: 35px;
+  margin-bottom: 20px;
+}
+
+.text-box b{
+  font-size: 20px;
+}
+
+/* Set the background section */
+.how-it-works{
+  position: relative; /* To position the overlay relative to the section */
+  height: 400px; /* Adjust the height of the section */
+  background-image: url('howitworks.png.webp'); /* Path to your image */
+  background-size: cover; /* Ensures the image covers the whole section */
+  background-position: center; /* Centers the image */
+}
+
+/* Create the green overlay */
+.how-it-works::after {
+  content: ""; /* Needed for the pseudo-element */
+  position: absolute; /* Position overlay on top of the section */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(13, 172, 119, 0.3); /* Semi-transparent custom green overlay */
+  z-index: 1; /* Place overlay above the image */
+}
+
+/* Content inside the section */
+.how-it-works {
+  position: relative; /* Ensures text appears above the overlay */
+  z-index: 2; /* Places text above the overlay */
+  color: white; /* White text color */
+  text-align: center;
+  padding: 50px;
+}
+
+.faq-container {
+  display: flex;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-top: 50px;
+}
+
+.faq-left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 400px;
+  margin-left: 100px;
+}
+
+.faq-image {
+  width: 300px;
+  height: 300px;
+  object-fit: cover;
+  margin-bottom: 10px;
+}
+
+.faq-header {
+  font-size: 45px;
+  font-weight: bold;
+  text-align: center;
+  margin-top: 0;
+}
+
+.faq-right {
+  flex-grow: 1;
+  width: 40%;
+  margin-top: 170px;
+  margin-right: 100px;
+  font-size: 20px;
+}
+
+.faq-item {
+  padding: 10px 0;
+}
+
+.faq-question {
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.faq-answer {
+  display: none;
+  padding-top: 10px;
+  font-size: 16px;
+  color: #333;
+}
+
+.faq-question:hover {
+  color: #0073e6;
+}
+
+.arrow {
+  transition: transform 0.3s;
+}
+
+.arrow.up {
+  transform: rotate(180deg);
+}
+
+/* Styling for the Get in Touch Section */
+.get-in-touch {
+  padding: 30px;
+  text-align: center;
+  width: 100%;
+  max-width: 500px;
+  margin: auto;
+}
+
+.get-in-touch h2 {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.get-in-touch p {
+  font-size: 16px;
+  color: #555;
+  margin-bottom: 20px;
+}
+
+.contact-info {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 15px;
+}
+
+.whatsapp-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: #25D366; /* WhatsApp green */
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.whatsapp-icon {
+  width: 24px;
+  height: 24px;
+  margin-right: 8px;
+}
+
+.contact-designer {
+  margin-top: 20px;
+}
+
+.designer-button {
+  display: inline-block;
+  padding: 5px 10px;
+  background-color: #25D366;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+.designer-button:hover {
+  background-color: #1eaf56; /* Darker shade on hover */
+}
+
+.footer-credit {
+  margin-top: 30px;
+  font-size: 14px;
+  color: #555;
+}
+
+.heart {
+  color: red;
+}
+
+/* Footer Styling */
+.footer-nav {
+  padding: 20px;
+  text-align: center;
+}
+
+.footer-nav nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.footer-nav nav ul li {
+  display: inline;
+}
+
+.footer-nav nav ul li a {
+  color: rgba(13, 172, 119, 0.938);
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: bold;
+  transition: color 0.3s;
+}
+
+.footer-nav nav ul li a:hover {
+  color: #25D366; /* WhatsApp green color or any highlight color */
+}

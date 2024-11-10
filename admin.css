@@ -1,0 +1,202 @@
+/* General Body Styling */
+body {
+    font-family: 'Roboto', Arial, sans-serif; /* Using Google Font for a modern look */
+    margin: 0;
+    padding: 0;
+    color: #333; /* Default text color for better contrast */
+    line-height: 1.6; /* Better line spacing */
+  }
+  
+  .home{
+      min-height:100vh;
+      width:100%;
+      background-position: center;
+      background-size: cover;
+      position: relative;
+    background-color: rgba(13, 172, 119, 0.938); /* Green background color */
+  }
+  
+  /* Navbar Styling */
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px; /* Slightly larger padding for a more spacious look */
+    border-radius: 8px; /* Rounded corners for a smoother look */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Slight shadow for depth */
+  }
+  
+  /* Logo Styling */
+  .navbar .logo {
+    font-size: 28px; /* Larger font size for logo */
+    color: white; /* White color for better contrast */
+    font-weight: bold;
+    letter-spacing: 1px; /* Spacing between letters for a clean look */
+  }
+  
+  /* Menu Styling */
+  .navbar .menu {
+    display: flex;
+    gap: 30px; /* Increased spacing between menu items */
+  }
+  
+  .navbar .menu a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px; /* Slightly larger font size */
+    padding: 10px 20px; /* Increased padding for better clickability */
+    border-radius: 4px;
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Added transform effect for a smoother hover */
+  }
+  
+  .navbar .menu a:hover {
+    background-color: white;
+    color: #333; /* Dark text on hover for contrast */
+    transform: scale(1.05); /* Slightly increase size on hover for interaction feedback */
+  }
+
+  /* Big Text Styling */
+.bigtext {
+    color: white;
+    margin-top: 150px; /* Adjusted top margin for balance */
+    text-align: center;
+    font-size: 80px; /* Larger font size for a more striking heading */
+    font-weight: bold;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); /* Shadow for text to make it pop */
+    margin-bottom: 0px;
+  }
+  
+  /* Small Text Styling */
+  .smalltext {
+    color: white; /* Changed to white for consistency */
+    text-align: center;
+    font-size: 20px; /* Slightly larger font for better readability */
+    font-weight: 300; /* Lighter weight for contrast with the big text */
+    margin-top: 5px;
+  }
+
+  /* Centering the admin container */
+.admin-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center elements horizontally */
+    justify-content: center; /* Center elements vertically */
+    min-height: 100vh; /* Ensure it fills the full height of the screen */
+    text-align: center; /* Center the text inside the container */
+    margin: 0 auto;
+    padding: 20px;
+    width: 100%; /* Adjust this width as needed */
+    background-color: #f9f9f9; /* Optional: light background color */
+    border-radius: 10px; /* Optional: rounded corners */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Optional: soft shadow for better visual appeal */
+}
+
+/* Style the h2 headings */
+h2 {
+    font-family: 'Arial', sans-serif;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Styling the form */
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    width: 100%;
+    max-width: 400px; /* Limit form width */
+    margin-bottom: 20px;
+}
+
+/* Input fields styling */
+input[type="file"], input[type="text"] {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    font-size: 16px;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+/* Focus effect for the inputs */
+input[type="file"]:focus, input[type="text"]:focus {
+    border-color: rgba(13, 172, 119, 0.938);
+}
+
+/* Button styling */
+button {
+    padding: 12px 20px;
+    background-color: rgba(13, 172, 119, 0.938);
+    color: white;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s ease-in-out;
+}
+
+button:hover {
+    background-color: rgba(13, 172, 119, 1); /* Darker shade on hover */
+    transform: scale(1.05); /* Slight zoom effect on hover */
+}
+
+button:active {
+    transform: scale(1); /* Reset scale on button click */
+}
+
+/* Styling for the search bar */
+#searchAdmin {
+    padding: 12px;
+    width: 100%;
+    max-width: 400px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    font-size: 16px;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+#searchAdmin:focus {
+    border-color: rgba(13, 172, 119, 0.938);
+}
+
+/* PDF list styling */
+#pdfList {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    width: 100%;
+}
+
+/* Optional: styling for each PDF item */
+.pdf-item {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 400px;
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.pdf-item button {
+    background-color: rgba(13, 172, 119, 0.938);
+    border: none;
+    padding: 5px 10px;
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.pdf-item button:hover {
+    background-color: rgba(13, 172, 119, 1); /* Darker shade on hover */
+}
