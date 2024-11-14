@@ -3,7 +3,7 @@ const uploadForm = document.getElementById('uploadForm');
 const pdfInput = document.getElementById('pdfInput');
 const pdfList = document.getElementById('pdfList');
 
-const backendUrl = 'https://dargreat.vercel.app/';
+const backendUrl = 'https://dargreat.vercel.app';
 const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhZG1pbiI6eyJpZCI6IjY3MzBlZTRhZWIyODUzMGY5YjI2ZTgxYiJ9LCJpYXQiOjE3MzEyODMzMjUsImV4cCI6MTczMTM2OTcyNX0.RxOkhKtRW9C4Wvd2DuORPfiisxrR2vms-khjdjQnUV0';
 
 // Fetch and display PDFs on page load
