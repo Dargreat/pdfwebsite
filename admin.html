@@ -1,59 +1,64 @@
+
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Panel</title>
-<!-- Inside index.html -->
-<link rel="stylesheet" href="admin.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel</title>
+  <!-- Inside index.html -->
+  <link rel="stylesheet" href="./index.css">
 
 </head>
+
 <body>
-    <nav>
-        <a href="admin.html">Admin Panel</a>
-        <a href="browse.html">Browse PDFs</a>
-        <section class="home" id="home">
-            <nav class="navbar">
-              <div class="logo">
-                <img src="logo.png" alt="Logo" height="40"> <!-- Replace with your logo -->
-              </div>
-              <div class="menu">
-                <ul>
-                  <a href="#home">Home</a>
-                  <a href="#faq-container">FAQs</a>
-                  <a href="#how-it-works">How it Works</a>
-                  <a href="#browse-pdfs">Browse PDFs</a>
-                  <a href="#get-in-touch">Contact</a>
-                  <a href="#blog">Blog</a>
-                </ul>
-              </div>
-            </nav>
-          
-            <h1 class="bigtext">EKSU BRO</h1>
-            <h3 class="smalltext">pastquestions . blog . web3</h3>
-          </section>
-
-          <div class="admin-container">
-            <h2>Upload PDF</h2>
-            <!-- Upload form with AJAX -->
-            <form id="uploadForm" enctype="multipart/form-data">
-                <input type="file" id="pdfFile" name="file" required />
-                <input type="text" id="pdfTitle" name="title" placeholder="Enter PDF Title" required />
-                <button type="submit">Upload PDF</button>
-            </form>
-
-            <h2>Manage PDFs</h2>
-            <!-- Search Bar to filter PDFs -->
-            <input type="text" id="searchAdmin" placeholder="Search PDFs to delete" onkeyup="searchAdminPDFs()">
-            
-            <!-- List of PDFs uploaded -->
-            <div id="pdfList"></div>
+  <nav>
+    <a href="admin.html">Admin Panel</a>
+    <a href="browse.html">Browse PDFs</a>
+    <section class="home" id="home">
+      <nav class="navbar">
+        <div class="logo">
+          <img src="logo.png" alt="Logo" height="40"> <!-- Replace with your logo -->
         </div>
+        <div class="menu">
+          <ul>
+            <a href="#home">Home</a>
+            <a href="#faq-container">FAQs</a>
+            <a href="#how-it-works">How it Works</a>
+            <a href="#browse-pdfs">Browse PDFs</a>
+            <a href="#get-in-touch">Contact</a>
+            <a href="#blog">Blog</a>
+          </ul>
+        </div>
+      </nav>
+
+      <h1 class="bigtext">EKSU BRO</h1>
+      <h3 class="smalltext">pastquestions . blog . web3</h3>
+    </section>
+
+    <div class="admin-container">
+      <h2>Upload PDF</h2>
+      <!-- Upload form with AJAX -->
+      <form id="uploadForm">
+        <input type="text" id="pdfTitle" name="title" placeholder="Enter PDF Title" required />
+        <input type="number" name="pages" id="pages">
+        <input type="file" id="pdfFile" name="file" required />
+        <button type="submit">Upload PDF</button>
+      </form>
+
+      <h2>Manage PDFs</h2>
+      <!-- Search Bar to filter PDFs -->
+      <input type="text" id="searchAdmin" placeholder="Search PDFs to delete" onkeyup="searchAdminPDFs()">
+
+      <!-- List of PDFs uploaded -->
+      <div id="pdfList"></div>
+    </div>
 
     <script src="https://cdn.firebase.com/js/client.js"></script>
-    <script type="module" src="admin.js"></script>
+    <script src="admin.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
 </body>
+
 </html>
