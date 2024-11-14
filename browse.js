@@ -3,7 +3,7 @@ const backendUrl = 'https://dargreat.vercel.app';
 // Function to fetch PDFs from Firestore
 async function fetchPDFs() {
     try {
-        const response = await fetch(`${backendUrl}/get-pdfs`);
+        const response = await fetch(`${backendUrl}/api/pdf`);
         
         if (!response.ok) {
             throw new Error('Failed to fetch PDFs');
