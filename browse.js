@@ -39,14 +39,17 @@ function renderPDFs(pdfs) {
         
         const title = document.createElement('h3');
         title.innerText = pdf.title;
+        const pages = document.createElement('h5');
+        pages.innerText = pdf?.pages ? `Pages: ${pdf?.pages}` : 'Unspecified';
         
         const downloadLink = document.createElement('a');
-        downloadLink.href = pdf.downloadUrl;
+        downloadLink.href = pdf.url;
         downloadLink.target = '_blank';
         downloadLink.innerText = 'Download';
         downloadLink.classList.add('download-button');
         
         pdfElement.appendChild(title);
+        pdfElement.appendChild(pages);
         pdfElement.appendChild(downloadLink);
         pdfList.appendChild(pdfElement);
     });
