@@ -4,7 +4,7 @@ const pdfInput = document.getElementById('pdfInput');
 const pdfList = document.getElementById('pdfList');
 
 const backendUrl = 'https://dargreat.vercel.app';
-const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhZG1pbiI6eyJpZCI6IjY3MzBlZTRhZWIyODUzMGY5YjI2ZTgxYiJ9LCJpYXQiOjE3MzEyODMzMjUsImV4cCI6MTczMTM2OTcyNX0.RxOkhKtRW9C4Wvd2DuORPfiisxrR2vms-khjdjQnUV0';
+let token = '';
 
 // Fetch and display PDFs on page load
 // document.addEventListener('DOMContentLoaded', fetchAndDisplayPDFs);
@@ -125,4 +125,13 @@ async function fetchAndDisplayPDFs() {
 
 window.onload = function() {
     fetchAndDisplayPDFs();
+    (() => {
+        let localToken = localStorage.getItem('authToken');
+        if (!localToken || localToken == null || localToken == undefined) {
+            alert('Invalid or expired auth token');
+            window.location.href = '/login.html';
+            return;
+        }
+        token = localToken;
+    })();
 }
