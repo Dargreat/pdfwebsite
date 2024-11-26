@@ -3,7 +3,7 @@ const uploadForm = document.getElementById('uploadForm');
 const pdfInput = document.getElementById('pdfInput');
 const pdfList = document.getElementById('pdfList');
 
-const backendUrl = 'http://localhost:3000';
+const backendUrl = 'https://dargreat.vercel.app';
 let token = '';
 
 // Fetch and display PDFs on page load
