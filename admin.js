@@ -9,7 +9,6 @@ let token = '';
 // Fetch and display PDFs on page load
 // document.addEventListener('DOMContentLoaded', fetchAndDisplayPDFs);
 
-// Handle PDF upload
 uploadForm.addEventListener('submit', async (event) => {
     event.preventDefault();
 
@@ -29,30 +28,33 @@ uploadForm.addEventListener('submit', async (event) => {
         return;
     }
 
-    // Convert the file to Base64
-    const fileBase64 = await toBase64(file);
-
-    // Create the request payload
-    const payload = {
-        title,
-        pages: pages ? parseInt(pages, 10) : null,
-        pdfImageBase64: fileBase64
-    };
-
     try {
-        const response = await fetch(`${backendUrl}/api/pdf/upload `, {
+        // Convert the file to Base64
+        const base64File = await toBase64(file);
+
+        // Create the payload
+        const payload = {
+            title,
+            pages: pages ? parseInt(pages, 10) : null,
+            file: base64File, // Base64 encoded string
+        };
+
+        // Send the Base64 file to the backend
+        const response = await fetch(`${backendUrl}/api/pdf/upload`, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
-            body: JSON.stringify(payload)
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}` // Authorization header
+            },
+            body: JSON.stringify(payload),
         });
 
         const result = await response.json();
         if (response.ok) {
             alert("PDF uploaded successfully!");
-            fileInput.value = ""; // Clear the input
-            fetchAndDisplayPDFs(); // Refresh the PDF list
+            fileInput.value = "";
+            fetchAndDisplayPDFs();
         } else {
-
             alert(`Error: ${result.message}`);
         }
         console.log(result);
@@ -62,15 +64,16 @@ uploadForm.addEventListener('submit', async (event) => {
     }
 });
 
-// Helper function to convert file to Base64
+// Function to convert file to Base64
 const toBase64 = (file) => {
     return new Promise((resolve, reject) => {
         const reader = new FileReader();
-        reader.onload = () => resolve(reader.result); // Get only Base64 part
+        reader.onload = () => resolve(reader.result); // Extract only Base64 data (without prefix)
         reader.onerror = error => reject(error);
         reader.readAsDataURL(file);
     });
-}
+};
+
 
 
 // Delete a PDF
