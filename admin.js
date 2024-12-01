@@ -3,7 +3,8 @@ const uploadForm = document.getElementById('uploadForm');
 const pdfInput = document.getElementById('pdfInput');
 const pdfList = document.getElementById('pdfList');
 
-const backendUrl = 'https://dargreat.vercel.app';
+// const backendUrl = 'https://dargreat.vercel.app';
+const backendUrl = 'http://localhost:3000';
 let token = '';
 
 // Fetch and display PDFs on page load
@@ -29,24 +30,19 @@ uploadForm.addEventListener('submit', async (event) => {
     }
 
     try {
-        // Convert the file to Base64
-        const base64File = await toBase64(file);
+        // Create FormData and append the file and other fields
+        const formData = new FormData();
+        formData.append('title', title);
+        formData.append('pages', pages);
+        formData.append('file', file);
 
-        // Create the payload
-        const payload = {
-            title,
-            pages: pages ? parseInt(pages, 10) : null,
-            file: base64File, // Base64 encoded string
-        };
-
-        // Send the Base64 file to the backend
+        // Send the form data to the backend
         const response = await fetch(`${backendUrl}/api/pdf/upload`, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}` // Authorization header
             },
-            body: JSON.stringify(payload),
+            body: formData, // FormData object
         });
 
         const result = await response.json();
@@ -63,6 +59,7 @@ uploadForm.addEventListener('submit', async (event) => {
         alert("Failed to upload PDF. Please try again.");
     }
 });
+
 
 // Function to convert file to Base64
 const toBase64 = (file) => {
