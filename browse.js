@@ -1,4 +1,5 @@
 const backendUrl = 'https://dargreat.vercel.app';
+pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
 
 // Function to fetch PDFs from Firestore
 async function fetchPDFs() {
@@ -29,30 +30,45 @@ function displayNoPDFsFound() {
 }
 
 // Function to render PDFs on the page
-function renderPDFs(pdfs) {
-    const pdfList = document.getElementById('pdf-list');
-    pdfList.innerHTML = ''; // Clear previous PDFs
+async function renderPDFs(pdfs) {
+    const pdfListContainer = document.getElementById('pdfList');
+    pdfListContainer.innerHTML = ''; // Clear existing PDFs
 
-    pdfs.forEach(pdf => {
+    for (const pdf of pdfs) {
         const pdfElement = document.createElement('div');
         pdfElement.classList.add('pdf-item');
-        
-        const title = document.createElement('h3');
-        title.innerText = pdf.title;
-        const pages = document.createElement('h5');
-        pages.innerText = pdf?.pages ? `Pages: ${pdf?.pages}` : 'Unspecified';
-        
-        const downloadLink = document.createElement('a');
-        downloadLink.href = pdf.url;
-        downloadLink.target = '_blank';
-        downloadLink.innerText = 'Download';
-        downloadLink.classList.add('download-button');
-        
-        pdfElement.appendChild(title);
-        pdfElement.appendChild(pages);
-        pdfElement.appendChild(downloadLink);
-        pdfList.appendChild(pdfElement);
-    });
+
+        // Create a canvas for the thumbnail
+        const canvas = document.createElement('canvas');
+        canvas.classList.add('pdf-thumbnail'); // Add the class here
+        const context = canvas.getContext('2d');
+
+        // Generate the thumbnail using PDF.js
+        try {
+            const loadingTask = pdfjsLib.getDocument(pdf.url); // Load the PDF
+            const pdfDoc = await loadingTask.promise;
+            const page = await pdfDoc.getPage(1); // Get the first page
+            const viewport = page.getViewport({ scale: 0.3 }); // Scale for the thumbnail
+
+            // Set canvas dimensions
+            canvas.width = viewport.width;
+            canvas.height = viewport.height;
+
+            // Render the first page into the canvas
+            await page.render({ canvasContext: context, viewport: viewport }).promise;
+        } catch (error) {
+            console.error('Error generating thumbnail for PDF:', error);
+        }
+
+        // Add the title, thumbnail, and download button
+        pdfElement.innerHTML = `
+            <h3>${pdf.title}</h3>
+            <a href="${pdf.url}" download="${pdf.title}" class="download-button">Download</a>
+        `;
+        pdfElement.prepend(canvas); // Add the thumbnail above the title and button
+
+        pdfListContainer.appendChild(pdfElement);
+    }
 }
 
 // Function to filter PDFs based on search input
