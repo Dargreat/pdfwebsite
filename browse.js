@@ -1,5 +1,4 @@
 const backendUrl = 'https://dargreat.vercel.app';
-pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
 
 // Function to fetch PDFs from Firestore
 async function fetchPDFs() {
@@ -30,18 +29,29 @@ function displayNoPDFsFound() {
 }
 
 // Function to render PDFs on the page
-async function renderPDFs(pdfs) {
-    const pdfListContainer = document.getElementById('pdfList');
-    pdfListContainer.innerHTML = ''; // Clear existing PDFs
+function renderPDFs(pdfs) {
+    const pdfList = document.getElementById('pdf-list');
+    pdfList.innerHTML = ''; // Clear previous PDFs
 
     pdfs.forEach(pdf => {
         const pdfElement = document.createElement('div');
         pdfElement.classList.add('pdf-item');
-        pdfElement.innerHTML = `
-            <h3>${pdf.title}</h3>
-            <a href="${pdf.url}" download="${pdf.title}" class="download-button">Download</a>
-        `;
-        pdfListContainer.appendChild(pdfElement);
+        
+        const title = document.createElement('h3');
+        title.innerText = pdf.title;
+        const pages = document.createElement('h5');
+        pages.innerText = pdf?.pages ? `Pages: ${pdf?.pages}` : 'Unspecified';
+        
+        const downloadLink = document.createElement('a');
+        downloadLink.href = pdf.url;
+        downloadLink.target = '_blank';
+        downloadLink.innerText = 'Download';
+        downloadLink.classList.add('download-button');
+        
+        pdfElement.appendChild(title);
+        pdfElement.appendChild(pages);
+        pdfElement.appendChild(downloadLink);
+        pdfList.appendChild(pdfElement);
     });
 }
 
@@ -57,6 +67,11 @@ function searchPDFs() {
         } else {
             item.style.display = 'none';
         }
+    });
+}
+
+// Fetch and display PDFs when the page loads
+window.onload = fetchPDFs;
     });
 }
 
