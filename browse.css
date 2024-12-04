@@ -168,14 +168,3 @@ body {
 .pdf-item button:active {
     transform: scale(1);
 }
-
-
-.pdf-thumbnail {
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    margin-bottom: 10px;
-    width: 100%; /* Adjust as needed */
-    max-width: 150px; /* Set a max width */
-    height: auto; /* Maintain aspect ratio */
-    display: block;
-}
