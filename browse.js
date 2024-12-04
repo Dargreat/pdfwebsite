@@ -59,4 +59,16 @@ function renderPDFs(pdfs) {
 function searchPDFs() {
     const query = document.getElementById('search-bar').value.toLowerCase();
     
-    const pdfItems = document.querySelectorAll('.pdf
+    const pdfItems = document.querySelectorAll('.pdf-item');
+    pdfItems.forEach(item => {
+        const title = item.querySelector('h3').innerText.toLowerCase();
+        if (title.includes(query)) {
+            item.style.display = 'block';
+        } else {
+            item.style.display = 'none';
+        }
+    });
+}
+
+// Fetch and display PDFs when the page loads
+window.onload = fetchPDFs;
