@@ -1,4 +1,4 @@
-const backendUrl = 'https://dargreat.vercel.app';
+const backendUrl  = 'https://backend-for-dragreat.onrender.com';
 
 // Function to fetch PDFs from Firestore
 async function fetchPDFs() {
