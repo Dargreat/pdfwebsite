@@ -72,7 +72,7 @@ function searchPDFs() {
 
 // Fetch and display PDFs when the page loads
 window.onload = fetchPDFs;
-    );
+    
 }
 
 // Fetch and display PDFs when the page loads
