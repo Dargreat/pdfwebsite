@@ -604,28 +604,32 @@ nav .fa{
   }
 }
 
-.get-in-touch h2 {
-  font-size: 19px;
-  color: #333;
-  margin-bottom: 10px;
-}
-.get-in-touch p {
-  font-size: 13px;
-  color: #555;
-  margin: auto;
-  text-align: center;
-  justify-content: center;
-}
-.whatsapp-link {
-  display: flex;
-  align-items: center;
-  text-decoration: none;
-  color: #25D366; /* WhatsApp green */
-  font-size: 14px;
-  font-weight: bold;
-}
-.whatsapp-icon {
-  width: 19px;
-  height: 19px;
-  margin-right: 8px;
+@media (max-width: 768px) {
+  .get-in-touch p {
+    font-size: 1rem; /* Adjust font size for smaller screens */
+    max-width: 90%; /* Allow paragraph to take up more space */
+  }
+
+  .get-in-touch h2 {
+    font-size: 1.5rem; /* Slightly smaller heading for mobile */
+  }
+
+  .whatsapp-link {
+    font-size: 1rem; /* Smaller font size for mobile */
+  }
+
+  .designer-button {
+    font-size: 1rem; /* Adjust button font size for mobile */
+    padding: 8px 16px; /* Adjust padding for mobile */
+  }
+
+  .footer-credit {
+    font-size: 0.9rem; /* Smaller font size for footer on mobile */
+  }
+
+  /* Ensure the WhatsApp icon and button are responsive */
+  .whatsapp-icon {
+    width: 25px; /* Adjust icon size for mobile */
+    height: 25px;
+  }
 }
