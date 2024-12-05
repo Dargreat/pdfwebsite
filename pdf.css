@@ -506,7 +506,7 @@ nav .fa{
 
 .faq-image {
   width: 100%;
-  max-width: 400px;
+  max-width: 600px;
   height: auto;
   margin: 0 auto;
 }
@@ -566,7 +566,7 @@ nav .fa{
 
   /* Increase the image size for mobile */
   .faq-image {
-    max-width: 600px; /* Increase the image size for smaller screens */
+    min-width: 350px; /* Increase the image size for smaller screens */
     margin: 0 auto 20px;
   }
 
