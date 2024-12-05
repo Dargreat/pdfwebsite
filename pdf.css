@@ -565,7 +565,7 @@ nav .fa{
   }
 
   .faq-image {
-    max-width: 300px; /* Adjust image size for smaller screens */
+    max-width: 500px; /* Adjust image size for smaller screens */
     margin: 0 auto 20px;
   }
 
@@ -587,5 +587,6 @@ nav .fa{
   .faq-answer {
     padding: 10px;
     font-size: 14px;
+    text-align: center;
   }
 }
