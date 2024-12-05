@@ -454,3 +454,10 @@ nav .fa{
     display: block;
   }
   
+
+@media (max-width: 767px) {
+    .avsub pre ul {
+        list-style-type: decimal;
+        margin-left: 20px;
+    }
+}
