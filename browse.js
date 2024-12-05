@@ -83,10 +83,8 @@ async function renderPDFThumbnail(pdfUrl, canvas) {
     }
 }
 
-// Function to filter PDFs based on search input
-function searchPDFs() {
-    const query = document.getElementById('search-bar').value.toLowerCase();
-    
+// Function to filter PDFs based on search input (search bar or URL parameter)
+function searchPDFs(query) {
     const pdfItems = document.querySelectorAll('.pdf-item');
     pdfItems.forEach(item => {
         const title = item.querySelector('h3').innerText.toLowerCase();
@@ -98,5 +96,20 @@ function searchPDFs() {
     });
 }
 
+// Function to get the search query from URL parameters
+function getSearchQueryFromURL() {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get('search');  // Returns the value of 'search' parameter
+}
+
 // Fetch and display PDFs when the page loads
-window.onload = fetchPDFs;
+window.onload = async function() {
+    // Fetch and display PDFs
+    await fetchPDFs();
+
+    // If there is a search query in the URL, trigger the search
+    const searchQuery = getSearchQueryFromURL();
+    if (searchQuery) {
+        searchPDFs(searchQuery.toLowerCase());
+    }
+};
