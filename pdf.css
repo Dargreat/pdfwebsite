@@ -455,9 +455,90 @@ nav .fa{
   }
   
 
-@media (max-width: 767px) {
-    .avsub pre ul {
-        list-style-type: decimal;
-        margin-left: 20px;
-    }
+/* General styles for mobile and small screens */
+@media (max-width: 768px) {
+  /* Faculty List - Display as a vertical list for mobile */
+  .avbsub pre {
+    white-space: normal;
+    font-size: 14px;
+    line-height: 1.6;
+    padding: 10px;
+    text-align: left;
+  }
+
+  /* FAQ Section - Image and text above dropdown for mobile */
+  .faq-container {
+    display: flex;
+    flex-direction: column; /* Stack elements vertically */
+    align-items: center;
+  }
+
+  .faq-left, .faq-right {
+    width: 100%;
+    text-align: center;
+  }
+
+  .faq-left img {
+    max-width: 80%; /* Scale image for mobile */
+    margin-bottom: 20px;
+  }
+
+  /* Dropdown menu styling for mobile */
+  .faq-right .faq-item {
+    text-align: left;
+    padding: 10px;
+  }
+
+  /* Get in Touch and Footer Section - Smaller fonts for mobile */
+  .get-in-touch h2 {
+    font-size: 18px;
+  }
+
+  .get-in-touch p, .footer-credit {
+    font-size: 14px;
+  }
+
+  .footer-nav ul {
+    font-size: 12px;
+  }
+}
+
+/* Tablet and larger screens */
+@media (min-width: 769px) {
+  /* Faculty List - Keep as is for larger screens */
+  .avbsub pre {
+    white-space: pre; /* Maintain the preformatted layout */
+    font-size: 16px;
+    padding: 20px;
+  }
+
+  /* FAQ Section - Normal layout for larger screens */
+  .faq-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  .faq-left {
+    width: 40%;
+    text-align: left;
+  }
+
+  .faq-right {
+    width: 60%;
+  }
+
+  /* Get in Touch and Footer Section - Normal size */
+  .get-in-touch h2 {
+    font-size: 24px;
+  }
+
+  .get-in-touch p, .footer-credit {
+    font-size: 16px;
+  }
+
+  .footer-nav ul {
+    font-size: 14px;
+  }
 }
