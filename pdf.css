@@ -612,6 +612,8 @@ nav .fa{
   font-size: 13px;
   color: #555;
   margin: auto;
+  text-align: center;
+  justify-content: center;
 }
 .whatsapp-link {
   display: flex;
