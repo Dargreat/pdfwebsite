@@ -40,6 +40,10 @@ body {
   gap: 30px; /* Increased spacing between menu items */
 }
 
+nav .fa{
+  display: none;
+}
+
 .navbar .menu a {
   color: white;
   text-decoration: none;
@@ -400,58 +404,51 @@ h1 {
 }
 
 
-.menu {
-  display: none; /* Initially hide the menu */
-  position: absolute;
-  top: 60px;
-  right: 0;
-  background-color: #333;
-  padding: 20px;
-  border-radius: 5px;
-}
 
-.menu ul {
-  list-style-type: none;
-  padding: 0;
-}
 
-.menu ul a {
-  color: white;
-  text-decoration: none;
-  padding: 10px;
+@media(max-width:700px){
+.menu ul li{
   display: block;
 }
-
-.menu ul a:hover {
-  background-color: #555;
-}
-
-/* Hamburger icon styling */
-.fa-bars {
-  font-size: 30px;
-  cursor: pointer;
-  display: none;
-}
-
-.fa-window-close {
-  font-size: 30px;
-  cursor: pointer;
+.menu{
   position: absolute;
-  top: 10px;
-  right: 10px;
+  background: #f33446;
+  height: 100vh;
+  width:200px;
+  top: 0;
+  right: -200px;
+  text-align: left;
+  z-index:2;
+  transition: 1s;
+}
+nav .fa{
+  display: block;
+  color: #fff;
+  margin: 10px;
+  font-size: 22px;
+  cursor: pointer;
+}
+.navbar .menu a{
+  font-size: 15px;
+  justify-content: center;
+  text-align: center;
+  margin: auto;
+}
+.bigtext{
+  font-size: 60px;
+}
+.smalltext{
+  font-size: 15px;
+}
+.icon-box{
+  font-size: 20px;
+}
+.line{
+  margin-bottom: 10px;
+}
 }
 
-/* Mobile view: show hamburger icon */
-@media (max-width: 768px) {
-  .fa-bars {
-    display: block;
-  }
-}
 
-
-.faq-answer {
-    display: none;
-  }
   
   .faq-answer.show {
     display: block;
