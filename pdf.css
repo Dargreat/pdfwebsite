@@ -631,7 +631,7 @@ nav .fa{
   right: -100%; /* Hide the menu off-screen */
   width: 100%; /* Adjust width to fit your design */
   height: 100vh; /* Full height */
-  background-color: #fff;
+  background-color: green;
   transition: transform 0.3s ease; /* Smooth open/close */
 }
 .menu.open {
