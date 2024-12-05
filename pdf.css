@@ -5,6 +5,7 @@ body {
   padding: 0;
   color: #333; /* Default text color for better contrast */
   line-height: 1.6; /* Better line spacing */
+  overflow-x: hidden;
 }
 
 .home{
