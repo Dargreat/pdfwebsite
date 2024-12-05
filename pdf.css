@@ -401,6 +401,33 @@ h1 {
 
 
 
+@media(max-width:700px){
+.menu ul li{
+  display: block;
+}
+.menu{
+  position: absolute;
+  background: #f33446;
+  height: 100vh;
+  width:200px;
+  top: 0;
+  right: -200px;
+  text-align: left;
+  z-index:2;
+  transition: 1s;
+}
+nav .fa{
+  display: block;
+  color: #fff;
+  margin: 10px;
+  font-size: 22px;
+  cursor: pointer;
+}
+.menu ul{
+  padding: 30px;
+}
+}
+
 
 
 
