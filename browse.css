@@ -176,6 +176,8 @@ body {
     margin: 0 auto;
     border: 1px solid #ccc;
     border-radius: 4px;
+    width: 40px;
+    height: 40px;
 }
 .pdf-item {
     text-align: center;
