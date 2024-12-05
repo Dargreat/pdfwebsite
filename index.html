@@ -33,12 +33,12 @@
   <h1 class="bigtext">EKSU BRO</h1>
   <h3 class="smalltext">pastquestions . blog . web3</h3>
 
- <!-- The search bar in index.html -->
-<div class="search-container">
-  <div class="search-bar-container">
-    <input class="search-bar" type="text" id="searchQuery" placeholder="Browse PDFs..." onkeydown="handleSearch(event)">
+  <!-- Search Bar Section -->
+  <div class="search-container">
+    <div class="search-bar-container">
+      <input class="search-bar" type="text" id="searchQuery" placeholder="Browse PDFs..." onkeydown="handleSearch(event)">
+    </div>
   </div>
-</div>
 </section>
 
 <!-- Available Subjects Section -->
@@ -181,21 +181,16 @@
     </ul>
   </nav>
 </footer>
-  <script>
-    var menu = document.getElementById("menu");
+<script>
+  
+  var menu = document.getElementById("menu")
+  function showMenu (){
+      menu.style.right ="0";
+  }
+  function hideMenu (){
+      menu.style.right ="-200px";
+  }
 
-// Show menu
-function showMenu() {
-    menu.style.right = "0"; // Slide the menu in
-}
-
-// Hide menu
-function hideMenu() {
-    menu.style.right = "-200px"; // Slide the menu out
-}
-
-
-
-  </script>
+</script>
 </body>
 </html>
