@@ -1,13 +1,10 @@
-// JavaScript to handle the menu toggle functionality
-  function showMenu() {
-    const menu = document.getElementById('menu');
-    menu.style.display = 'block'; // Show the menu when the hamburger icon is clicked
-  }
-
-  function hideMenu() {
-    const menu = document.getElementById('menu');
-    menu.style.display = 'none'; // Hide the menu when the close icon is clicked
-  }
+      var menu = document.getElementById("menu")
+        function showMenu (){
+            menu.style.right ="0";
+        }
+        function hideMenu (){
+            menu.style.right ="-200px";
+        }
   // Capture the Enter key and redirect to browse.html with search query
   function handleSearch(event) {
     if (event.key === 'Enter') {
