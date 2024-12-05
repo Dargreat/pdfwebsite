@@ -458,13 +458,19 @@ nav .fa{
 /* General styles for mobile and small screens */
 @media (max-width: 768px) {
   /* Faculty List - Display as a vertical list for mobile */
-  .avbsub pre {
+.avbsub pre {
     white-space: normal;
     font-size: 14px;
     line-height: 1.6;
     padding: 10px;
     text-align: left;
   }
+
+  .avbsub pre b {
+    display: block; /* Force each line to appear on a new line */
+  }
+}
+
 
   /* FAQ Section - Image and text above dropdown for mobile */
   .faq-container {
