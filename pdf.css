@@ -564,31 +564,40 @@ nav .fa{
     font-size: 1.5rem;
   }
 
+  /* Increase the image size for mobile */
   .faq-image {
-    max-width: 500px; /* Adjust image size for smaller screens */
+    max-width: 80%; /* Increase the image size for smaller screens */
     margin: 0 auto 20px;
   }
 
   .faq-right {
     flex: none;
+    width: 100%; /* Ensure FAQ items take full width on mobile */
+    margin-left: 10px; /* Add some left margin for better alignment */
   }
 
   .faq-item {
-    padding: 10px;
+    padding: 15px; /* Increase padding for better spacing */
     border: none; /* Remove border between FAQ items on smaller screens */
   }
 
   .faq-question {
     font-size: 16px;
     padding: 10px;
-    text-align: center;
-    justify-content: center;
   }
 
   .faq-answer {
     padding: 10px;
     font-size: 14px;
-    text-align: center;
-    justify-content: center;
+  }
+
+  /* Adjust alignment for mobile view */
+  .faq-question, .faq-answer {
+    margin-left: 20px; /* Add space on the left for alignment */
+  }
+
+  .faq-question {
+    font-size: 18px;
+    padding-left: 20px; /* Add padding to the left for mobile */
   }
 }
