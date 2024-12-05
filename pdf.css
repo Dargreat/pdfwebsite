@@ -505,10 +505,10 @@ nav .fa{
 }
 
 .faq-image {
-  width: 100%;
+ width: 100%;
   max-width: 400px;
   height: auto;
-  margin: 0 auto;
+  margin: 0 auto; /* Center the image horizontally */
 }
 
 .faq-right {
@@ -566,8 +566,9 @@ nav .fa{
 
   /* Increase the image size for mobile */
   .faq-image {
-    min-width: 300px; /* Increase the image size for smaller screens */
-    margin: 0 20px 20px 20px;
+   max-width: 80%; /* Limit image width to 80% of its container */
+    margin: 0 auto; /* Center the image horizontally */
+    display: block; /* Ensure it behaves as a block-level element for centering */
   }
 
   .faq-right {
