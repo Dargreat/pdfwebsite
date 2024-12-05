@@ -581,6 +581,7 @@ nav .fa{
   .faq-question {
     font-size: 16px;
     padding: 10px;
+    text-align: center;
   }
 
   .faq-answer {
