@@ -637,3 +637,16 @@ nav .fa{
     height: 25px;
   }
 }
+
+.menu {
+  position: fixed; /* or absolute */
+  top: 0;
+  right: -100%; /* Hide the menu off-screen */
+  width: 100%; /* Adjust width to fit your design */
+  height: 100vh; /* Full height */
+  background-color: #fff;
+  transition: transform 0.3s ease; /* Smooth open/close */
+}
+.menu.open {
+  right: 0; /* Show the menu when open */
+}
