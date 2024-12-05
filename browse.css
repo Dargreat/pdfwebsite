@@ -186,7 +186,7 @@ body {
 .download-button {
     margin-top: 10px;
     display: inline-block;
-    background-color: #007bff;
+    background-color: rgba(13, 172, 119, 0.938);
     color: white;
     padding: 5px 10px;
     text-decoration: none;
