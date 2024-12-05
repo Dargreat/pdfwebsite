@@ -611,8 +611,7 @@ nav .fa{
 .get-in-touch p {
   font-size: 13px;
   color: #555;
-  margin-bottom: 20px;
-  margin-right: 5px;
+  margin: auto;
 }
 .whatsapp-link {
   display: flex;
