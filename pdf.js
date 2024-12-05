@@ -1,10 +1,4 @@
-      var menu = document.getElementById("menu")
-        function showMenu (){
-            menu.style.right ="0";
-        }
-        function hideMenu (){
-            menu.style.right ="-200px";
-        }
+
   // Capture the Enter key and redirect to browse.html with search query
   function handleSearch(event) {
     if (event.key === 'Enter') {
@@ -26,19 +20,6 @@ function toggleAnswer(element) {
     // Toggle the arrow direction
     arrow.classList.toggle('up');
 }
-
-var menu = document.getElementById("menu");
-
-// Show menu
-function showMenu() {
-    menu.style.right = "0"; // Slide the menu in
-}
-
-// Hide menu
-function hideMenu() {
-    menu.style.right = "-200px"; // Slide the menu out
-}
-
 
 
   
