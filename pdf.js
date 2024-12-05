@@ -1,15 +1,14 @@
-// Function to handle the search
-function searchPDFs() {
-    const query = document.getElementById('searchQuery').value.trim(); // Get search query and trim any extra spaces
-    if (query !== "") { // Check if the input is not empty
-        // Redirect to the Browse PDFs page with the query parameter
-        // This assumes that your browse page reads the URL parameter and handles the search
-        window.location.href = `browse.html?search=${encodeURIComponent(query)}`;
-    } else {
-        alert("Please enter a search term!"); // Show an alert if the input is empty
-    }
-}
 
+  // Capture the Enter key and redirect to browse.html with search query
+  function handleSearch(event) {
+    if (event.key === 'Enter') {
+      let searchQuery = document.getElementById("searchQuery").value;
+      if (searchQuery) {
+        // Redirect to browse.html and append the search query as a URL parameter
+        window.location.href = `browse.html?search=${encodeURIComponent(searchQuery)}`;
+      }
+    }
+  }
 // Toggle the FAQ answer display and arrow direction
 function toggleAnswer(element) {
     const answer = element.nextElementSibling;
