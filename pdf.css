@@ -602,3 +602,27 @@ nav .fa{
     padding-left: 20px; /* Add padding to the left for mobile */
   }
 }
+
+.get-in-touch h2 {
+  font-size: 19px;
+  color: #333;
+  margin-bottom: 10px;
+}
+.get-in-touch p {
+  font-size: 13px;
+  color: #555;
+  margin-bottom: 20px;
+}
+.whatsapp-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: #25D366; /* WhatsApp green */
+  font-size: 14px;
+  font-weight: bold;
+}
+.whatsapp-icon {
+  width: 19px;
+  height: 19px;
+  margin-right: 8px;
+}
