@@ -398,3 +398,25 @@ h1 {
 .footer-nav nav ul li a:hover {
   color: #25D366; /* WhatsApp green color or any highlight color */
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.faq-answer {
+    display: none;
+  }
+  
+  .faq-answer.show {
+    display: block;
+  }
+  
