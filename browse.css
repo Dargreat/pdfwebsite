@@ -168,3 +168,25 @@ body {
 .pdf-item button:active {
     transform: scale(1);
 }
+
+
+
+.pdf-thumbnail {
+    display: block;
+    margin: 0 auto;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+.pdf-item {
+    text-align: center;
+    margin-bottom: 20px;
+}
+.download-button {
+    margin-top: 10px;
+    display: inline-block;
+    background-color: #007bff;
+    color: white;
+    padding: 5px 10px;
+    text-decoration: none;
+    border-radius: 4px;
+}
