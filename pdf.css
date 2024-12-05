@@ -553,6 +553,9 @@ nav .fa{
 
 /* Media Query for Small Screens */
 @media (max-width: 768px) {
+  .body{
+    overflow-x: hidden,
+  }
   .faq-container {
     flex-direction: column;
     padding: 20px;
