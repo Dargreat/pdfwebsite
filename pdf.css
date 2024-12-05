@@ -612,7 +612,7 @@ nav .fa{
   font-size: 13px;
   color: #555;
   margin-bottom: 20px;
-  margin-right: auto;
+  margin-right: 5px;
 }
 .whatsapp-link {
   display: flex;
