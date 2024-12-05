@@ -506,7 +506,7 @@ nav .fa{
 
 .faq-image {
  width: 100%;
-  max-width: 600px;
+  max-width: 500px;
   height: auto;
   margin: 0 auto; /* Center the image horizontally */
 }
@@ -566,7 +566,7 @@ nav .fa{
 
   /* Increase the image size for mobile */
   .faq-image {
-   max-width: 80%; /* Limit image width to 80% of its container */
+   max-width: 1000%; /* Limit image width to 1000% of its container */
     margin: 0 auto; /* Center the image horizontally */
     display: block; /* Ensure it behaves as a block-level element for centering */
   }
