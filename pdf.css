@@ -636,4 +636,8 @@ nav .fa{
     z-index:2;
     transition: 1s;
 }
+  .footer-nav nav ul li a{
+    font-size: 13;
+  }
+}
 
