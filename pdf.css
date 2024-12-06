@@ -1,5 +1,5 @@
 /* General Body Styling */
-body {
+body, html {
   font-family: 'Roboto', Arial, sans-serif; /* Using Google Font for a modern look */
   margin: 0;
   padding: 0;
