@@ -6,6 +6,7 @@ body {
   color: #333; /* Default text color for better contrast */
   line-height: 1.6; /* Better line spacing */
   overflow-x: hidden;
+   box-sizing: border-box; /* Ensures padding and border do not affect width */
 }
 
 .home{
@@ -38,7 +39,7 @@ body {
 /* Menu Styling */
 .navbar .menu {
   display: flex;
-  gap: 30px; /* Increased spacing between menu items */
+  gap: 20px; /* Increased spacing between menu items */
 }
 
 nav .fa{
