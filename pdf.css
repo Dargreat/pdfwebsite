@@ -626,17 +626,14 @@ nav .fa{
     height: 25px;
   }
   .menu {
-  position: fixed; /* or absolute */
-  top: 0;
-  right: -100%; /* Hide the menu off-screen */
-  width: 100%; /* Adjust width to fit your design */
-  height: 100vh; /* Full height */
-  background-color: green;
-  transition: transform 0.3s ease; /* Smooth open/close */
-}
-.menu.open {
-  right: 0; /* Show the menu when open */
-}
-  
+    position: absolute;
+    background: #f33446;
+    height: 100vh;
+    width:200px;
+    top: 0;
+    right: -200px;
+    text-align: left;
+    z-index:2;
+    transition: 1s;
 }
 
