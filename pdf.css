@@ -635,6 +635,7 @@ nav .fa{
     text-align: left;
     z-index:2;
     transition: 1s;
+    overflow-x: hidden;
 }
   .footer-nav nav ul li a{
     font-size: 13px;
