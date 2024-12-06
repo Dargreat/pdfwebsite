@@ -637,7 +637,7 @@ nav .fa{
     transition: 1s;
 }
   .footer-nav nav ul li a{
-    font-size: 13;
+    font-size: 13px;
   }
 }
 
