@@ -3,72 +3,111 @@ const uploadForm = document.getElementById('uploadForm');
 const pdfInput = document.getElementById('pdfInput');
 const pdfList = document.getElementById('pdfList');
 
-// Backend URLs
+// const backendUrl = 'https://dargreat.vercel.app';
 const backendUrl = 'https://backend-for-dragreat.onrender.com';
+// const backendUrl = 'http://localhost:3000';
 let token = '';
 
-// Prevent form refresh and handle PDF upload
-uploadForm.addEventListener('submit', async (event) => {
-    event.preventDefault(); // Prevent default form submission behavior
+// Fetch and display PDFs on page load
+// document.addEventListener('DOMContentLoaded', fetchAndDisplayPDFs);
 
-    const title = document.getElementById('pdfTitle').value.trim();
+uploadForm.addEventListener('submit', async (event) => {
+    event.preventDefault();
+
+    const title = document.getElementById('pdfTitle').value;
+    const pages = document.getElementById('pages').value;
     const fileInput = document.getElementById('pdfFile');
     const file = fileInput.files[0];
 
-    // Validate inputs
-    if (!title) {
-        alert("Please provide a title for the PDF.");
+    if (!file) {
+        alert("Please select a PDF to upload.");
         return;
     }
 
-    if (!file || file.type !== 'application/pdf') {
-        alert("Please upload a valid PDF file.");
+    // Check if the file is a PDF
+    if (file.type !== 'application/pdf') {
+        alert("Only PDF files are allowed.");
         return;
     }
 
     try {
+        // Create FormData and append the file and other fields
         const formData = new FormData();
         formData.append('title', title);
+        formData.append('pages', pages);
         formData.append('file', file);
 
-        // Send the file to the backend
+        // Send the form data to the backend
         const response = await fetch(`${backendUrl}/api/pdf/upload`, {
             method: 'POST',
             headers: {
-                'Authorization': `Bearer ${token}`,
+                'Authorization': `Bearer ${token}` // Authorization header
             },
-            body: formData,
+            body: formData, // FormData object
         });
 
         const result = await response.json();
         if (response.ok) {
             alert("PDF uploaded successfully!");
-            fetchAndDisplayPDFs(); // Refresh the list of PDFs
+            fileInput.value = "";
+            fetchAndDisplayPDFs();
         } else {
-            alert(`Error: ${result.message || 'Failed to upload PDF.'}`);
+            alert(`Error: ${result.message}`);
         }
+        console.log(result);
     } catch (error) {
         console.error("Upload failed:", error);
-        alert("An error occurred while uploading the PDF. Please try again.");
+        alert("Failed to upload PDF. Please try again.");
     }
 });
 
-// Fetch and display PDFs on page load
+
+// Function to convert file to Base64
+const toBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result); // Extract only Base64 data (without prefix)
+        reader.onerror = error => reject(error);
+        reader.readAsDataURL(file);
+    });
+};
+
+
+
+// Delete a PDF
+async function deletePDF(pdfId) {
+    if (!confirm("Are you sure you want to delete? It can't be recovered unless re-uploaded.")) {
+        return;
+    }
+
+    try {
+        const response = await fetch(`${backendUrl}/api/pdf/delete/${pdfId}`, {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+        });
+
+        const result = await response.json();
+        if (response.ok) {
+            alert("PDF deleted successfully!");
+            fetchAndDisplayPDFs();
+        } else {
+            alert(`Error: ${result.message}`);
+        }
+    } catch (error) {
+        console.error("Delete failed:", error);
+        alert("Failed to delete PDF. Please try again.");
+    }
+}
+
+// Fetch PDFs from backend and display them
 async function fetchAndDisplayPDFs() {
     pdfList.innerHTML = ''; // Clear existing list
 
     try {
-        const response = await fetch(`${backendUrl}/api/pdf`, {
-            headers: { 'Authorization': `Bearer ${token}` },
-        });
-
-        if (!response.ok) throw new Error("Failed to fetch PDFs.");
-
+        const response = await fetch(`${backendUrl}/api/pdf`);
         const pdfs = await response.json();
-        if (pdfs.length === 0) {
-            pdfList.innerHTML = "<li>No PDFs uploaded yet.</li>";
-            return;
-        }
+
+        console.log(pdfs);
 
         pdfs.forEach(pdf => {
             const listItem = document.createElement('li');
@@ -76,50 +115,24 @@ async function fetchAndDisplayPDFs() {
                 <span>${pdf.title}</span>
                 <button onclick="deletePDF('${pdf._id}')">Delete</button>
             `;
+
             pdfList.appendChild(listItem);
         });
     } catch (error) {
         console.error("Failed to fetch PDFs:", error);
-        alert("Unable to load PDFs. Please try again later.");
+        alert("Unable to load PDFs. Please refresh the page.");
     }
 }
 
-// Delete a PDF
-async function deletePDF(pdfId) {
-    if (!confirm("Are you sure you want to delete? This cannot be undone.")) return;
-
-    try {
-        const response = await fetch(`${backendUrl}/api/pdf/delete/${pdfId}`, {
-            method: 'DELETE',
-            headers: {
-                'Authorization': `Bearer ${token}`,
-            },
-        });
-
-        const result = await response.json();
-        if (response.ok) {
-            alert("PDF deleted successfully!");
-            fetchAndDisplayPDFs(); // Refresh the list
-        } else {
-            alert(`Error: ${result.message || 'Failed to delete PDF.'}`);
-        }
-    } catch (error) {
-        console.error("Delete failed:", error);
-        alert("An error occurred while deleting the PDF. Please try again.");
-    }
-}
-
-// Initialize page
-window.onload = function () {
+window.onload = function() {
+    fetchAndDisplayPDFs();
     (() => {
-        const localToken = localStorage.getItem('authToken');
-        if (!localToken) {
-            alert('Invalid or expired auth token. Redirecting to login.');
+        let localToken = localStorage.getItem('authToken');
+        if (!localToken || localToken == null || localToken == undefined) {
+            alert('Invalid or expired auth token');
             window.location.href = '/login.html';
             return;
         }
         token = localToken;
     })();
-
-    fetchAndDisplayPDFs(); // Load PDFs
-};
+}
