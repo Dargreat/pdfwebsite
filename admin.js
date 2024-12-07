@@ -9,13 +9,11 @@ const backendUrl = 'https://backend-for-dragreat.onrender.com';
 let token = '';
 
 // Fetch and display PDFs on page load
-// document.addEventListener('DOMContentLoaded', fetchAndDisplayPDFs);
-
 uploadForm.addEventListener('submit', async (event) => {
     event.preventDefault();
 
-    const title = document.getElementById('pdfTitle').value;
-    const pages = document.getElementById('pages').value;
+    const title = document.getElementById('pdfTitle').value.trim();
+    const pages = document.getElementById('pages').value.trim();
     const fileInput = document.getElementById('pdfFile');
     const file = fileInput.files[0];
 
@@ -39,7 +37,7 @@ uploadForm.addEventListener('submit', async (event) => {
             const chunkBlob = new Blob([chunks[i]], { type: 'application/pdf' });
 
             const formData = new FormData();
-            formData.append('title', `${title} - Chunk ${i + 1}`);
+            formData.append('title', `${title} (${i + 1})`); // Dynamic chunk naming
             formData.append('pages', pages);
             formData.append('file', chunkBlob);
 
@@ -54,9 +52,9 @@ uploadForm.addEventListener('submit', async (event) => {
 
             const result = await response.json();
             if (response.ok) {
-                alert("PDF chunk uploaded successfully!");
+                alert(`Chunk ${i + 1} uploaded successfully!`);
             } else {
-                alert(`Error: ${result.message}`);
+                alert(`Error uploading chunk ${i + 1}: ${result.message}`);
             }
         }
 
@@ -68,17 +66,35 @@ uploadForm.addEventListener('submit', async (event) => {
     }
 });
 
-// Function to split PDF file into chunks of a specific size (in bytes)
+// Function to split PDF file into chunks of a specific size (in bytes) using pdf-lib
 async function splitPDFIntoChunks(file, chunkSize) {
+    const { PDFDocument } = PDFLib; // Ensure pdf-lib is loaded
     const arrayBuffer = await file.arrayBuffer();
-    const totalChunks = Math.ceil(arrayBuffer.byteLength / chunkSize);
+    const pdfDoc = await PDFDocument.load(arrayBuffer);
+    const totalPages = pdfDoc.getPages().length;
 
     const chunks = [];
-    for (let i = 0; i < totalChunks; i++) {
-        const start = i * chunkSize;
-        const end = Math.min((i + 1) * chunkSize, arrayBuffer.byteLength);
-        const chunk = arrayBuffer.slice(start, end);
-        chunks.push(chunk);
+    let currentChunk = await PDFDocument.create(); // Create a new PDF for each chunk
+    let currentSize = 0;
+
+    for (let i = 0; i < totalPages; i++) {
+        const [page] = await currentChunk.copyPages(pdfDoc, [i]); // Copy the page to the new chunk
+        currentChunk.addPage(page);
+        currentSize += page.size;
+
+        // If the chunk exceeds the specified size, save it and start a new one
+        if (currentSize >= chunkSize) {
+            const chunkBytes = await currentChunk.save();
+            chunks.push(chunkBytes);
+            currentChunk = await PDFDocument.create(); // Start a new chunk
+            currentSize = 0;
+        }
+    }
+
+    // Add remaining pages to the last chunk
+    if (currentSize > 0) {
+        const chunkBytes = await currentChunk.save();
+        chunks.push(chunkBytes);
     }
 
     return chunks;
@@ -119,7 +135,6 @@ async function fetchAndDisplayPDFs() {
             throw new Error('Failed to fetch PDFs');
         }
         const pdfs = await response.json();
-        console.log(pdfs);
 
         pdfs.forEach(pdf => {
             const listItem = document.createElement('li');
@@ -136,6 +151,7 @@ async function fetchAndDisplayPDFs() {
     }
 }
 
+// Load PDFs and check authentication token on page load
 window.onload = function() {
     fetchAndDisplayPDFs();
     (() => {
@@ -147,4 +163,4 @@ window.onload = function() {
         }
         token = localToken;
     })();
-}
+};
