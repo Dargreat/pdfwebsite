@@ -8,9 +8,7 @@ const backendUrl = 'https://backend-for-dragreat.onrender.com';
 // const backendUrl = 'http://localhost:3000';
 let token = '';
 
-// Fetch and display PDFs on page load
-document.addEventListener('DOMContentLoaded', fetchAndDisplayPDFs);
-
+// Upload form event listener
 uploadForm.addEventListener('submit', async (event) => {
     event.preventDefault();
 
@@ -39,7 +37,7 @@ uploadForm.addEventListener('submit', async (event) => {
             const chunkBlob = new Blob([chunks[i]], { type: 'application/pdf' });
 
             const formData = new FormData();
-            formData.append('title', `pdf(${i + 1})`); // Updated name format
+            formData.append('title', `${title} - Chunk ${i + 1}`);
             formData.append('pages', pages);
             formData.append('file', chunkBlob);
 
@@ -47,7 +45,7 @@ uploadForm.addEventListener('submit', async (event) => {
             const response = await fetch(`${backendUrl}/api/pdf/upload`, {
                 method: 'POST',
                 headers: {
-                    'Authorization': `Bearer ${token}`, // Authorization header
+                    'Authorization': `Bearer ${token}` // Authorization header
                 },
                 body: formData, // FormData object
             });
@@ -60,8 +58,8 @@ uploadForm.addEventListener('submit', async (event) => {
             }
         }
 
-        fileInput.value = ""; // Reset file input
-        fetchAndDisplayPDFs(); // Refresh the list of PDFs
+        fileInput.value = "";
+        fetchAndDisplayPDFs();
     } catch (error) {
         console.error("Upload failed:", error);
         alert("Failed to upload PDF. Please try again.");
@@ -99,7 +97,7 @@ async function deletePDF(pdfId) {
         const result = await response.json();
         if (response.ok) {
             alert("PDF deleted successfully!");
-            fetchAndDisplayPDFs(); // Refresh the PDF list
+            fetchAndDisplayPDFs();
         } else {
             alert(`Error: ${result.message}`);
         }
@@ -124,11 +122,8 @@ async function fetchAndDisplayPDFs() {
         pdfs.forEach(pdf => {
             const listItem = document.createElement('li');
             listItem.innerHTML = `
-                <div class="pdf-item">
-                    <img src="${pdf.thumbnailUrl}" alt="Thumbnail" class="pdf-thumbnail" /> 
-                    <span>${pdf.title}</span>
-                    <button onclick="deletePDF('${pdf._id}')">Delete</button>
-                </div>
+                <span>${pdf.title}</span>
+                <button onclick="deletePDF('${pdf._id}')">Delete</button>
             `;
 
             pdfList.appendChild(listItem);
@@ -140,9 +135,7 @@ async function fetchAndDisplayPDFs() {
 }
 
 window.onload = function() {
-    // Fetch and display PDFs immediately when the page loads
     fetchAndDisplayPDFs();
-
     (() => {
         let localToken = localStorage.getItem('authToken');
         if (!localToken || localToken == null || localToken == undefined) {
