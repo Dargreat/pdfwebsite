@@ -9,13 +9,10 @@ const backendUrl = 'https://backend-for-dragreat.onrender.com';
 let token = '';
 
 // Fetch and display PDFs on page load
-// document.addEventListener('DOMContentLoaded', fetchAndDisplayPDFs);
-
 uploadForm.addEventListener('submit', async (event) => {
     event.preventDefault();
 
     const title = document.getElementById('pdfTitle').value;
-    const pages = document.getElementById('pages').value;
     const fileInput = document.getElementById('pdfFile');
     const file = fileInput.files[0];
 
@@ -31,48 +28,80 @@ uploadForm.addEventListener('submit', async (event) => {
     }
 
     try {
-        // Create FormData and append the file and other fields
-        const formData = new FormData();
-        formData.append('title', title);
-        formData.append('pages', pages);
-        formData.append('file', file);
-
-        // Send the form data to the backend
-        const response = await fetch(`${backendUrl}/api/pdf/upload`, {
-            method: 'POST',
-            headers: {
-                'Authorization': `Bearer ${token}` // Authorization header
-            },
-            body: formData, // FormData object
-        });
-
-        const result = await response.json();
-        if (response.ok) {
-            alert("PDF uploaded successfully!");
-            fileInput.value = "";
-            fetchAndDisplayPDFs();
+        // Check file size (10 MB = 10 * 1024 * 1024 bytes)
+        const maxFileSize = 10 * 1024 * 1024;
+        if (file.size > maxFileSize) {
+            alert("File size exceeds 10 MB. Splitting PDF into smaller chunks...");
+            await splitAndUploadPDF(file, title);
         } else {
-            alert(`Error: ${result.message}`);
+            await uploadPDF(file, title); // Regular upload for small files
         }
-        console.log(result);
+
+        fileInput.value = ""; // Clear input field
+        fetchAndDisplayPDFs();
     } catch (error) {
         console.error("Upload failed:", error);
         alert("Failed to upload PDF. Please try again.");
     }
 });
 
+// Upload a single PDF file
+async function uploadPDF(file, title) {
+    const formData = new FormData();
+    formData.append('title', title);
+    formData.append('file', file);
+
+    const response = await fetch(`${backendUrl}/api/pdf/upload`, {
+        method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${token}`
+        },
+        body: formData,
+    });
+
+    const result = await response.json();
+    if (!response.ok) {
+        throw new Error(result.message || "Failed to upload PDF");
+    }
+
+    alert(`Uploaded: ${title}`);
+}
+
+// Split large PDFs and upload each chunk
+async function splitAndUploadPDF(file, title) {
+    const pdfData = await toBase64(file);
+    const pdfDoc = await pdfjsLib.getDocument({ data: atob(pdfData.split(',')[1]) }).promise;
+
+    for (let i = 0; i < pdfDoc.numPages; i += 10) { // Split every 10 pages
+        const chunkTitle = `${title} (Part ${Math.floor(i / 10) + 1})`;
+        const chunk = await extractPDFPages(pdfDoc, i, i + 10);
+        await uploadPDF(chunk, chunkTitle);
+    }
+}
+
+// Extract a range of pages from a PDF
+async function extractPDFPages(pdfDoc, start, end) {
+    const pdfWriter = await PDFLib.PDFDocument.create();
+    const totalPages = pdfDoc.numPages;
+
+    for (let i = start; i < Math.min(end, totalPages); i++) {
+        const [page] = await pdfWriter.copyPages(pdfDoc, [i]);
+        pdfWriter.addPage(page);
+    }
+
+    const pdfBytes = await pdfWriter.save();
+    return new Blob([pdfBytes], { type: 'application/pdf' });
+}
 
 // Function to convert file to Base64
 const toBase64 = (file) => {
     return new Promise((resolve, reject) => {
         const reader = new FileReader();
-        reader.onload = () => resolve(reader.result); // Extract only Base64 data (without prefix)
+        reader.onload = () => resolve(reader.result);
         reader.onerror = error => reject(error);
         reader.readAsDataURL(file);
     });
 };
-
-
 
 // Delete a PDF
 async function deletePDF(pdfId) {
@@ -135,4 +164,4 @@ window.onload = function() {
         }
         token = localToken;
     })();
-}
+};
