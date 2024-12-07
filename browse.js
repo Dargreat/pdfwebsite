@@ -102,14 +102,75 @@ function getSearchQueryFromURL() {
     return urlParams.get('search');  // Returns the value of 'search' parameter
 }
 
-// Fetch and display PDFs when the page loads
-window.onload = async function() {
-    // Fetch and display PDFs
+// Function to split and upload PDF
+async function splitAndUploadPDF(pdfUrl) {
+    const response = await fetch(pdfUrl);
+    const blob = await response.blob();
+    const pdfArrayBuffer = await blob.arrayBuffer();
+    const pdf = await pdfjsLib.getDocument({ data: pdfArrayBuffer }).promise;
+
+    const totalPages = pdf.numPages;
+    const chunkSize = 10 * 1024 * 1024; // 10MB
+    let currentChunk = 0;
+    let currentSize = 0;
+    let writer = new pdfjsLib.PDFWriter();
+
+    for (let pageNum = 1; pageNum <= totalPages; pageNum++) {
+        const page = await pdf.getPage(pageNum);
+        const pageContent = await page.getOperatorList();
+        const pageSize = page.getViewport({ scale: 1 }).width * page.getViewport({ scale: 1 }).height; // Approximate size
+
+        if (currentSize + pageSize > chunkSize) {
+            // Upload the current chunk
+            await uploadPDF(writer, pdfUrl, currentChunk);
+            currentChunk++;
+            currentSize = 0;
+                      // Start a new writer for the next chunk
+            writer = new pdfjsLib.PDFWriter();
+        }
+
+        // Add the current page to the writer
+        writer.addPage(pageContent);
+        currentSize += pageSize;
+    }
+
+    // Upload the last chunk if it exists
+    if (currentSize > 0) {
+        await uploadPDF(writer, pdfUrl, currentChunk);
+    }
+}
+
+// Function to upload the PDF chunk
+async function uploadPDF(writer, originalPdfUrl, chunkIndex) {
+    const pdfBlob = await writer.save(); // Save the current chunk as a Blob
+    const formData = new FormData();
+    formData.append('file', pdfBlob, `chunk_${chunkIndex}_${Date.now()}.pdf`); // Naming convention
+
+    try {
+        const response = await fetch(`${backendUrl}/api/upload`, {
+            method: 'POST',
+            body: formData,
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to upload PDF chunk');
+        }
+
+        console.log(`Uploaded chunk ${chunkIndex} successfully.`);
+    } catch (error) {
+        console.error('Error uploading PDF chunk:', error);
+    }
+}
+
+// Initialize the application
+async function init() {
+    const searchQuery = getSearchQueryFromURL();
     await fetchPDFs();
 
-    // If there is a search query in the URL, trigger the search
-    const searchQuery = getSearchQueryFromURL();
     if (searchQuery) {
         searchPDFs(searchQuery.toLowerCase());
     }
-};
+}
+
+// Run the initialization function on page load
+window.onload = init;
