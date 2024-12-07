@@ -1,16 +1,29 @@
-  // Select elements from admin.html
+// Select elements from admin.html
 const uploadForm = document.getElementById('uploadForm');
 const pdfInput = document.getElementById('pdfInput');
 const pdfList = document.getElementById('pdfList');
 
-// const backendUrl = 'https://dargreat.vercel.app';
+// Backend URL
 const backendUrl = 'https://backend-for-dragreat.onrender.com';
-// const backendUrl = 'http://localhost:3000';
 let token = '';
 
 // Fetch and display PDFs on page load
-// document.addEventListener('DOMContentLoaded', fetchAndDisplayPDFs);
+window.onload = function () {
+    fetchAndDisplayPDFs();
 
+    // Verify token on load
+    (() => {
+        let localToken = localStorage.getItem('authToken');
+        if (!localToken) {
+            alert('Invalid or expired auth token');
+            window.location.href = '/login.html';
+            return;
+        }
+        token = localToken;
+    })();
+};
+
+// Handle PDF upload form submission
 uploadForm.addEventListener('submit', async (event) => {
     event.preventDefault();
 
@@ -39,7 +52,7 @@ uploadForm.addEventListener('submit', async (event) => {
             const chunkBlob = new Blob([chunks[i]], { type: 'application/pdf' });
 
             const formData = new FormData();
-            formData.append('title', `${title} - Chunk ${i + 1}`);
+            formData.append('title', `${title} (Part ${i + 1})`); // New naming convention
             formData.append('pages', pages);
             formData.append('file', chunkBlob);
 
@@ -47,19 +60,21 @@ uploadForm.addEventListener('submit', async (event) => {
             const response = await fetch(`${backendUrl}/api/pdf/upload`, {
                 method: 'POST',
                 headers: {
-                    'Authorization': `Bearer ${token}` // Authorization header
+                    'Authorization': `Bearer ${token}`,
                 },
-                body: formData, // FormData object
+                body: formData,
             });
 
-            const result = await response.json();
-            if (response.ok) {
-                alert("PDF chunk uploaded successfully!");
-            } else {
-                alert(`Error: ${result.message}`);
+            if (!response.ok) {
+                const errorData = await response.json();
+                alert(`Error uploading part ${i + 1}: ${errorData.message}`);
+                return;
             }
+
+            console.log(`Part ${i + 1} uploaded successfully.`);
         }
 
+        alert("PDF uploaded successfully!");
         fileInput.value = "";
         fetchAndDisplayPDFs();
     } catch (error) {
@@ -68,7 +83,7 @@ uploadForm.addEventListener('submit', async (event) => {
     }
 });
 
-// Function to split PDF file into chunks of a specific size (in bytes)
+// Split PDF file into chunks of a specific size (in bytes)
 async function splitPDFIntoChunks(file, chunkSize) {
     const arrayBuffer = await file.arrayBuffer();
     const totalChunks = Math.ceil(arrayBuffer.byteLength / chunkSize);
@@ -93,16 +108,20 @@ async function deletePDF(pdfId) {
     try {
         const response = await fetch(`${backendUrl}/api/pdf/delete/${pdfId}`, {
             method: 'DELETE',
-            headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`,
+            },
         });
 
-        const result = await response.json();
-        if (response.ok) {
-            alert("PDF deleted successfully!");
-            fetchAndDisplayPDFs();
-        } else {
+        if (!response.ok) {
+            const result = await response.json();
             alert(`Error: ${result.message}`);
+            return;
         }
+
+        alert("PDF deleted successfully!");
+        fetchAndDisplayPDFs();
     } catch (error) {
         console.error("Delete failed:", error);
         alert("Failed to delete PDF. Please try again.");
@@ -119,12 +138,12 @@ async function fetchAndDisplayPDFs() {
             throw new Error('Failed to fetch PDFs');
         }
         const pdfs = await response.json();
-        console.log(pdfs);
 
-        pdfs.forEach(pdf => {
+        pdfs.forEach((pdf) => {
             const listItem = document.createElement('li');
             listItem.innerHTML = `
                 <span>${pdf.title}</span>
+                <img src="${pdf.thumbnail || 'placeholder-thumbnail.png'}" alt="Thumbnail" class="pdf-thumbnail">
                 <button onclick="deletePDF('${pdf._id}')">Delete</button>
             `;
 
@@ -134,17 +153,4 @@ async function fetchAndDisplayPDFs() {
         console.error("Failed to fetch PDFs:", error);
         alert("Unable to load PDFs. Please refresh the page.");
     }
-}
-
-window.onload = function() {
-    fetchAndDisplayPDFs();
-    (() => {
-        let localToken = localStorage.getItem('authToken');
-        if (!localToken || localToken == null || localToken == undefined) {
-            alert('Invalid or expired auth token');
-            window.location.href = '/login.html';
-            return;
-        }
-        token = localToken;
-    })();
 }
