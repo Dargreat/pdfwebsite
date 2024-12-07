@@ -1,57 +1,37 @@
-// Extract specific pages from PDF
-async function extractPDFPages(srcDoc, start, end) {
-    try {
-        // Create a new PDF document for extracted pages
-        const pdfWriter = await PDFLib.PDFDocument.create();
+// Select elements from admin.html
+const uploadForm = document.getElementById('uploadForm');
+const pdfInput = document.getElementById('pdfInput');
+const pdfList = document.getElementById('pdfList');
 
-        for (let i = start; i < Math.min(end, srcDoc.getPageCount()); i++) {
-            // Copy pages from source document to the new document
-            const [pdfPage] = await pdfWriter.copyPages(srcDoc, [i]);
-            pdfWriter.addPage(pdfPage);
-        }
+// Backend URLs
+const backendUrl = 'https://backend-for-dragreat.onrender.com';
+let token = '';
 
-        // Save the extracted pages as a Blob
-        const pdfBytes = await pdfWriter.save();
-        return new Blob([pdfBytes], { type: 'application/pdf' });
-    } catch (error) {
-        console.error("Error during PDF page extraction:", error);
-        throw error;
+// Prevent form refresh and handle PDF upload
+uploadForm.addEventListener('submit', async (event) => {
+    event.preventDefault(); // Prevent default form submission behavior
+
+    const title = document.getElementById('pdfTitle').value.trim();
+    const fileInput = document.getElementById('pdfFile');
+    const file = fileInput.files[0];
+
+    // Validate inputs
+    if (!title) {
+        alert("Please provide a title for the PDF.");
+        return;
     }
-}
 
-// Split and upload PDF
-async function splitAndUploadPDF(file, title) {
-    try {
-        // Load PDF using PDFLib
-        const arrayBuffer = await file.arrayBuffer();
-        const pdfDoc = await PDFLib.PDFDocument.load(arrayBuffer);
-
-        console.log(`PDF loaded: ${pdfDoc.getPageCount()} pages.`);
-
-        // Split into chunks of 10 pages and upload each
-        for (let i = 0; i < pdfDoc.getPageCount(); i += 10) {
-            const chunkTitle = `${title} (Part ${Math.floor(i / 10) + 1})`;
-            console.log(`Extracting pages ${i + 1} to ${Math.min(i + 10, pdfDoc.getPageCount())} for ${chunkTitle}.`);
-
-            const chunkBlob = await extractPDFPages(pdfDoc, i, i + 10);
-            console.log(`Chunk created: ${chunkTitle}. Uploading...`);
-
-            await uploadPDF(chunkBlob, chunkTitle);
-            console.log(`Successfully uploaded ${chunkTitle}.`);
-        }
-    } catch (error) {
-        console.error("Error during PDF splitting and uploading:", error);
-        throw error;
+    if (!file || file.type !== 'application/pdf') {
+        alert("Please upload a valid PDF file.");
+        return;
     }
-}
-
-// Upload PDF chunk to backend
-async function uploadPDF(file, title) {
-    const formData = new FormData();
-    formData.append('title', title);
-    formData.append('file', file);
 
     try {
+        const formData = new FormData();
+        formData.append('title', title);
+        formData.append('file', file);
+
+        // Send the file to the backend
         const response = await fetch(`${backendUrl}/api/pdf/upload`, {
             method: 'POST',
             headers: {
@@ -61,12 +41,85 @@ async function uploadPDF(file, title) {
         });
 
         const result = await response.json();
-        if (!response.ok) {
-            throw new Error(result.message || "Failed to upload PDF chunk.");
+        if (response.ok) {
+            alert("PDF uploaded successfully!");
+            fetchAndDisplayPDFs(); // Refresh the list of PDFs
+        } else {
+            alert(`Error: ${result.message || 'Failed to upload PDF.'}`);
         }
-        console.log(`Upload successful for: ${title}`);
     } catch (error) {
         console.error("Upload failed:", error);
-        throw error;
+        alert("An error occurred while uploading the PDF. Please try again.");
+    }
+});
+
+// Fetch and display PDFs on page load
+async function fetchAndDisplayPDFs() {
+    pdfList.innerHTML = ''; // Clear existing list
+
+    try {
+        const response = await fetch(`${backendUrl}/api/pdf`, {
+            headers: { 'Authorization': `Bearer ${token}` },
+        });
+
+        if (!response.ok) throw new Error("Failed to fetch PDFs.");
+
+        const pdfs = await response.json();
+        if (pdfs.length === 0) {
+            pdfList.innerHTML = "<li>No PDFs uploaded yet.</li>";
+            return;
+        }
+
+        pdfs.forEach(pdf => {
+            const listItem = document.createElement('li');
+            listItem.innerHTML = `
+                <span>${pdf.title}</span>
+                <button onclick="deletePDF('${pdf._id}')">Delete</button>
+            `;
+            pdfList.appendChild(listItem);
+        });
+    } catch (error) {
+        console.error("Failed to fetch PDFs:", error);
+        alert("Unable to load PDFs. Please try again later.");
     }
 }
+
+// Delete a PDF
+async function deletePDF(pdfId) {
+    if (!confirm("Are you sure you want to delete? This cannot be undone.")) return;
+
+    try {
+        const response = await fetch(`${backendUrl}/api/pdf/delete/${pdfId}`, {
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+            },
+        });
+
+        const result = await response.json();
+        if (response.ok) {
+            alert("PDF deleted successfully!");
+            fetchAndDisplayPDFs(); // Refresh the list
+        } else {
+            alert(`Error: ${result.message || 'Failed to delete PDF.'}`);
+        }
+    } catch (error) {
+        console.error("Delete failed:", error);
+        alert("An error occurred while deleting the PDF. Please try again.");
+    }
+}
+
+// Initialize page
+window.onload = function () {
+    (() => {
+        const localToken = localStorage.getItem('authToken');
+        if (!localToken) {
+            alert('Invalid or expired auth token. Redirecting to login.');
+            window.location.href = '/login.html';
+            return;
+        }
+        token = localToken;
+    })();
+
+    fetchAndDisplayPDFs(); // Load PDFs
+};
