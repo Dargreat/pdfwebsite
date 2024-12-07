@@ -31,48 +31,58 @@ uploadForm.addEventListener('submit', async (event) => {
     }
 
     try {
-        // Create FormData and append the file and other fields
-        const formData = new FormData();
-        formData.append('title', title);
-        formData.append('pages', pages);
-        formData.append('file', file);
+        // Split the PDF into chunks
+        const chunks = await splitPDFIntoChunks(file, 10 * 1024 * 1024); // 10 MB per chunk
 
-        // Send the form data to the backend
-        const response = await fetch(`${backendUrl}/api/pdf/upload`, {
-            method: 'POST',
-            headers: {
-                'Authorization': `Bearer ${token}` // Authorization header
-            },
-            body: formData, // FormData object
-        });
+        // Upload each chunk
+        for (let i = 0; i < chunks.length; i++) {
+            const chunkBlob = new Blob([chunks[i]], { type: 'application/pdf' });
 
-        const result = await response.json();
-        if (response.ok) {
-            alert("PDF uploaded successfully!");
-            fileInput.value = "";
-            fetchAndDisplayPDFs();
-        } else {
-            alert(`Error: ${result.message}`);
+            const formData = new FormData();
+            formData.append('title', `${title} - Chunk ${i + 1}`);
+            formData.append('pages', pages);
+            formData.append('file', chunkBlob);
+
+            // Send the form data to the backend
+            const response = await fetch(`${backendUrl}/api/pdf/upload`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${token}` // Authorization header
+                },
+                body: formData, // FormData object
+            });
+
+            const result = await response.json();
+            if (response.ok) {
+                alert("PDF chunk uploaded successfully!");
+            } else {
+                alert(`Error: ${result.message}`);
+            }
         }
-        console.log(result);
+
+        fileInput.value = "";
+        fetchAndDisplayPDFs();
     } catch (error) {
         console.error("Upload failed:", error);
         alert("Failed to upload PDF. Please try again.");
     }
 });
 
+// Function to split PDF file into chunks of a specific size (in bytes)
+async function splitPDFIntoChunks(file, chunkSize) {
+    const arrayBuffer = await file.arrayBuffer();
+    const totalChunks = Math.ceil(arrayBuffer.byteLength / chunkSize);
 
-// Function to convert file to Base64
-const toBase64 = (file) => {
-    return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = () => resolve(reader.result); // Extract only Base64 data (without prefix)
-        reader.onerror = error => reject(error);
-        reader.readAsDataURL(file);
-    });
-};
+    const chunks = [];
+    for (let i = 0; i < totalChunks; i++) {
+        const start = i * chunkSize;
+        const end = Math.min((i + 1) * chunkSize, arrayBuffer.byteLength);
+        const chunk = arrayBuffer.slice(start, end);
+        chunks.push(chunk);
+    }
 
-
+    return chunks;
+}
 
 // Delete a PDF
 async function deletePDF(pdfId) {
@@ -105,8 +115,10 @@ async function fetchAndDisplayPDFs() {
 
     try {
         const response = await fetch(`${backendUrl}/api/pdf`);
+        if (!response.ok) {
+            throw new Error('Failed to fetch PDFs');
+        }
         const pdfs = await response.json();
-
         console.log(pdfs);
 
         pdfs.forEach(pdf => {
