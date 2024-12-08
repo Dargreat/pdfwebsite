@@ -4,7 +4,7 @@ const pdfInput = document.getElementById('pdfInput');
 const pdfList = document.getElementById('pdfList');
 
 // Backend URL
-const backendUrl = 'https://backend-for-dragreat.onrender.com'; 
+const backendUrl = 'https://backend-for-dragreat.onrender.com';
 let token = '';
 
 // Fetch and display PDFs on page load
@@ -43,7 +43,8 @@ uploadForm.addEventListener('submit', async (event) => {
     }
 
     try {
-        const chunks = await splitPDFIntoChunks(file, 10 * 1024 * 1024); // 10 MB per chunk
+        // Use 9MB per chunk to account for metadata
+        const chunks = await splitPDFIntoChunks(file, 9 * 1024 * 1024);
 
         for (let i = 0; i < chunks.length; i++) {
             const chunkBlob = new Blob([chunks[i]], { type: 'application/pdf' });
