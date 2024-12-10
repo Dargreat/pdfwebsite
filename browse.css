@@ -192,3 +192,55 @@ body {
     text-decoration: none;
     border-radius: 4px;
 }
+
+
+@media(max-width:768px){
+    .menu ul li{
+      display: block;
+    }
+    .menu{
+      position: absolute;
+      background:rgba(3, 39, 27, 0.938);
+      height: 100vh;
+      width:200px;
+      top: 0;
+      right: -200px;
+      text-align: left;
+      z-index:2;
+      transition: 1s;
+    }
+    nav .fa{
+      display: block;
+      color: #fff;
+      margin: 10px;
+      font-size: 22px;
+      cursor: pointer;
+    }
+    .navbar .menu a{
+      font-size: 15px;
+      justify-content: center;
+      text-align: center;
+      margin: auto;
+    }
+    .bigtext{
+      font-size: 60px;
+    }
+    .smalltext{
+      font-size: 15px;
+    }
+    .browse-title{
+        font-size: 40px;
+    }
+    #search-bar {
+        padding: 10px 12px;
+        width: 100%;
+        max-width: 200px;
+        border-radius: 50px;
+        border: 1px solid #ddd;
+        font-size: 10px;
+        outline: none;
+        transition: border-color 0.3s;
+        background-color: #fff;
+    }
+    
+}
