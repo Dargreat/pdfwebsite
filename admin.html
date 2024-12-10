@@ -22,6 +22,7 @@
           <img src="logo.png" alt="Logo" height="40"> <!-- Replace with your logo -->
         </div>
         <div class="menu">
+          <span class="fa fa-window-close" onclick="hideMenu()"></span>
           <ul>
             <a href="#home">Home</a>
             <a href="#faq-container">FAQs</a>
@@ -31,6 +32,7 @@
             <a href="#blog">Blog</a>
           </ul>
         </div>
+        <i class="fa fa-bars" onclick="showMenu()"></i>
       </nav>
 
       <h1 class="bigtext">EKSU BRO</h1>
@@ -54,6 +56,17 @@
       <!-- List of PDFs uploaded -->
       <div id="pdfList"></div>
     </div>
+    <script>
+  var menu = document.getElementById("menu")
+  function showMenu (){
+      menu.style.right ="0";
+  }
+  function hideMenu (){
+      menu.style.right ="-200px";
+  }
+
+</script>
+
 
     <script src="https://cdn.firebase.com/js/client.js"></script>
    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.15.349/pdf.min.js"></script>
