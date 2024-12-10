@@ -200,3 +200,40 @@ button:active {
 .pdf-item button:hover {
     background-color: rgba(13, 172, 119, 1); /* Darker shade on hover */
 }
+
+
+@media(max-width:768px){
+  .menu ul li{
+    display: block;
+  }
+  .menu{
+    position: absolute;
+    background:rgba(3, 39, 27, 0.938);
+    height: 100vh;
+    width:200px;
+    top: 0;
+    right: -200px;
+    text-align: left;
+    z-index:2;
+    transition: 1s;
+  }
+  nav .fa{
+    display: block;
+    color: #fff;
+    margin: 10px;
+    font-size: 22px;
+    cursor: pointer;
+  }
+  .navbar .menu a{
+    font-size: 15px;
+    justify-content: center;
+    text-align: center;
+    margin: auto;
+  }
+  .bigtext{
+    font-size: 60px;
+  }
+  .smalltext{
+    font-size: 15px;
+  }
+}
