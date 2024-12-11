@@ -257,7 +257,7 @@ form {
     align-items: center;
     gap: 15px;
     width: 100%;
-    max-width: 300px; /* Limit form width */
+    max-width: 250px; /* Limit form width */
     margin-bottom: 20px;
 }
   .uploadForm{
