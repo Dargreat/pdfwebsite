@@ -1,10 +1,12 @@
 /* General Body Styling */
-body {
-    font-family: 'Roboto', Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    color: #333;
-    line-height: 1.6;
+body, html {
+  font-family: 'Roboto', Arial, sans-serif; /* Using Google Font for a modern look */
+  margin: 0;
+  padding: 0;
+  color: #333; /* Default text color for better contrast */
+  line-height: 1.6; /* Better line spacing */
+  overflow-x: hidden;
+   box-sizing: border-box; /* Ensures padding and border do not affect width */
 }
 
 /* Home Section Styling */
@@ -242,5 +244,7 @@ body {
         transition: border-color 0.3s;
         background-color: #fff;
     }
-    
+    .browse-pdfs{
+        justify-content: center;
+    }
 }
