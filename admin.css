@@ -260,7 +260,7 @@ form {
     max-width: 300px; /* Limit form width */
     margin-bottom: 20px;
 }
-  uploadForm{
-      max-width: 300px;
+  .uploadForm{
+      max-width: 250px;
   }  
 }
