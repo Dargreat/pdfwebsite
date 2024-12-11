@@ -251,7 +251,7 @@ button:active {
     outline: none;
     transition: border-color 0.3s;
 }
-.form {
+form {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -260,4 +260,7 @@ button:active {
     max-width: 300px; /* Limit form width */
     margin-bottom: 20px;
 }
+  uploadForm{
+      max-width: 300px;
+  }  
 }
