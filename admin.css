@@ -203,7 +203,7 @@ button:active {
 
 
 @media(max-width:768px){
-     .home{
+     .home,body{
     overflow-x: hidden;
     max-width: 100%;
   }
