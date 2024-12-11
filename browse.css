@@ -246,5 +246,6 @@ body, html {
     }
     .browse-pdfs{
         justify-content: center;
+      text-align: center;
     }
 }
