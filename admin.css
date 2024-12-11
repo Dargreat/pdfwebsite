@@ -1,12 +1,14 @@
 /* General Body Styling */
-body {
-    font-family: 'Roboto', Arial, sans-serif; /* Using Google Font for a modern look */
-    margin: 0;
-    padding: 0;
-    color: #333; /* Default text color for better contrast */
-    line-height: 1.6; /* Better line spacing */
-  }
-  
+body, html {
+  font-family: 'Roboto', Arial, sans-serif; /* Using Google Font for a modern look */
+  margin: 0;
+  padding: 0;
+  color: #333; /* Default text color for better contrast */
+  line-height: 1.6; /* Better line spacing */
+  overflow-x: hidden;
+   box-sizing: border-box; /* Ensures padding and border do not affect width */
+}
+
   .home{
       min-height:100vh;
       width:100%;
