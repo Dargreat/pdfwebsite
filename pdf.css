@@ -632,7 +632,7 @@ nav .fa{
   }
   .menu {
     position: absolute;
-    background: #f33446;
+    background: rgba(3, 39, 27, 0.938);
     height: 100vh;
     width: 200px;
     top: 0;
