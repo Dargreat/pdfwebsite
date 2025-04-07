@@ -1,10 +1,12 @@
 /* General Body Styling */
-body {
-    font-family: 'Roboto', Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    color: #333;
-    line-height: 1.6;
+body, html {
+  font-family: 'Roboto', Arial, sans-serif; /* Using Google Font for a modern look */
+  margin: 0;
+  padding: 0;
+  color: #333; /* Default text color for better contrast */
+  line-height: 1.6; /* Better line spacing */
+  overflow-x: hidden;
+   box-sizing: border-box; /* Ensures padding and border do not affect width */
 }
 
 /* Home Section Styling */
@@ -167,4 +169,84 @@ body {
 
 .pdf-item button:active {
     transform: scale(1);
+}
+
+
+
+.pdf-thumbnail {
+    display: block;
+    margin: 0 auto;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 160px;
+    height: 80px;
+}
+.pdf-item {
+    text-align: center;
+    margin-bottom: 20px;
+}
+.download-button {
+    margin-top: 10px;
+    display: inline-block;
+    background-color: rgba(13, 172, 119, 0.938);
+    color: white;
+    padding: 5px 10px;
+    text-decoration: none;
+    border-radius: 4px;
+}
+
+
+@media(max-width:768px){
+    .menu ul li{
+      display: block;
+    }
+    .menu{
+      position: absolute;
+      background:rgba(3, 39, 27, 0.938);
+      height: 100vh;
+      width:200px;
+      top: 0;
+      right: -200px;
+      text-align: left;
+      z-index:2;
+      transition: 1s;
+    }
+    nav .fa{
+      display: block;
+      color: #fff;
+      margin: 10px;
+      font-size: 22px;
+      cursor: pointer;
+    }
+    .navbar .menu a{
+      font-size: 15px;
+      justify-content: center;
+      text-align: center;
+      margin: auto;
+    }
+    .bigtext{
+      font-size: 60px;
+    }
+    .smalltext{
+      font-size: 15px;
+    }
+    .browse-title{
+        font-size: 40px;
+    }
+    #search-bar {
+        padding: 10px 12px;
+        width: 100%;
+        max-width: 200px;
+        border-radius: 50px;
+        border: 1px solid #ddd;
+        font-size: 10px;
+        outline: none;
+        transition: border-color 0.3s;
+        background-color: #fff;
+    }
+    .browse-pdfs{
+        justify-content: center;
+      text-align: center;
+      margin: auto;
+    }
 }

@@ -3,9 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
   <title>Navbar Example</title>
   <link rel="stylesheet" href="browse.css">
-  <script src="pdf.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.15.349/pdf.min.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> <!-- Font Awesome for Icons -->
 </head>
@@ -16,7 +17,8 @@
     <div class="logo">
       <img src="logo.png" alt="Logo" height="40"> <!-- Replace with your logo -->
     </div>
-    <div class="menu">
+    <div class="menu" id="menu">
+       <span class="fa fa-window-close" onclick="hideMenu()"></span>
       <ul>
         <a href="#home">Home</a>
         <a href="#faq-container">FAQs</a>
@@ -26,6 +28,7 @@
         <a href="#blog">Blog</a>
       </ul>
     </div>
+     <i class="fa fa-bars" onclick="showMenu()"></i>
   </nav>
   <h1 class="bigtext">EKSU BRO</h1>
   <h3 class="smalltext">pastquestions . blog . web3</h3>
@@ -48,7 +51,17 @@
   </section>
 
 </section>
+ <script>
+  
+  var menu = document.getElementById("menu")
+  function showMenu (){
+      menu.style.right ="0";
+  }
+  function hideMenu (){
+      menu.style.right ="-200px";
+  }
 
+</script>
 <script src="browse.js"></script> <!-- JavaScript file -->
 </body>
 </html>

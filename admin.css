@@ -1,12 +1,14 @@
 /* General Body Styling */
-body {
-    font-family: 'Roboto', Arial, sans-serif; /* Using Google Font for a modern look */
-    margin: 0;
-    padding: 0;
-    color: #333; /* Default text color for better contrast */
-    line-height: 1.6; /* Better line spacing */
-  }
-  
+body, html {
+  font-family: 'Roboto', Arial, sans-serif; /* Using Google Font for a modern look */
+  margin: 0;
+  padding: 0;
+  color: #333; /* Default text color for better contrast */
+  line-height: 1.6; /* Better line spacing */
+  overflow-x: hidden;
+   box-sizing: border-box; /* Ensures padding and border do not affect width */
+}
+
   .home{
       min-height:100vh;
       width:100%;
@@ -199,4 +201,68 @@ button:active {
 
 .pdf-item button:hover {
     background-color: rgba(13, 172, 119, 1); /* Darker shade on hover */
+}
+
+
+@media(max-width:768px){
+     .home,body{
+    overflow-x: hidden;
+    max-width: 100%;
+  }
+  .menu ul li{
+    display: block;
+  }
+  .menu{
+    position: absolute;
+    background:rgba(3, 39, 27, 0.938);
+    height: 100vh;
+    width:200px;
+    top: 0;
+    right: -200px;
+    text-align: left;
+    z-index:2;
+    transition: 1s;
+  }
+  nav .fa{
+    display: block;
+    color: #fff;
+    margin: 10px;
+    font-size: 22px;
+    cursor: pointer;
+  }
+  .navbar .menu a{
+    font-size: 15px;
+    justify-content: center;
+    text-align: center;
+    margin: auto;
+  }
+  .bigtext{
+    font-size: 60px;
+  }
+  .smalltext{
+    font-size: 15px;
+  }
+    #searchAdmin {
+    padding: 9px;
+    width: 100%;
+    max-width: 300px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    font-size: 13px;
+    outline: none;
+    transition: border-color 0.3s;
+}
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    width: 100%;
+    max-width: 250px; /* Limit form width */
+    margin-bottom: 20px;
+}
+  .uploadForm{
+      max-width: 250px;
+  }  
 }

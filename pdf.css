@@ -1,10 +1,12 @@
 /* General Body Styling */
-body {
+body, html {
   font-family: 'Roboto', Arial, sans-serif; /* Using Google Font for a modern look */
   margin: 0;
   padding: 0;
   color: #333; /* Default text color for better contrast */
   line-height: 1.6; /* Better line spacing */
+  overflow-x: hidden;
+   box-sizing: border-box; /* Ensures padding and border do not affect width */
 }
 
 .home{
@@ -37,7 +39,11 @@ body {
 /* Menu Styling */
 .navbar .menu {
   display: flex;
-  gap: 30px; /* Increased spacing between menu items */
+  gap: 20px; /* Increased spacing between menu items */
+}
+
+nav .fa{
+  display: none;
 }
 
 .navbar .menu a {
@@ -129,7 +135,7 @@ body {
   font-size: 15px;
 }
 
-.avbsub pre{
+.avbsub p{
   text-align: center;
   font-size: 15px;
 }
@@ -316,6 +322,7 @@ h1 {
   font-size: 16px;
   color: #555;
   margin-bottom: 20px;
+  text-align: center;
 }
 
 .contact-info {
@@ -398,3 +405,245 @@ h1 {
 .footer-nav nav ul li a:hover {
   color: #25D366; /* WhatsApp green color or any highlight color */
 }
+
+
+
+
+@media(max-width:700px){
+.menu ul li{
+  display: block;
+}
+nav .fa{
+  display: block;
+  color: #fff;
+  margin: 10px;
+  font-size: 22px;
+  cursor: pointer;
+}
+.navbar .menu a{
+  font-size: 15px;
+  justify-content: center;
+  text-align: center;
+  margin: auto;
+}
+.bigtext{
+  font-size: 60px;
+}
+.smalltext{
+  font-size: 15px;
+}
+.icon-box{
+  font-size: 20px;
+}
+.line{
+  margin-bottom: 10px;
+}
+}
+
+
+  
+  .faq-answer.show {
+    display: block;
+  }
+  
+
+/* General styles for the faculty list */
+.faculty-list {
+  font-size: 16px;
+  line-height: 1.8;
+  margin: 0 auto;
+  padding: 0;
+  list-style: none;
+  text-align: left;
+}
+
+/* Mobile: Show list vertically */
+@media (max-width: 768px) {
+  .faculty-list {
+    display: block;
+  }
+
+  .faculty-list p {
+    margin-bottom: 10px; /* Space between each faculty item */
+  }
+}
+
+/* Tablet and larger screens: Show list horizontally with two items per row */
+@media (min-width: 769px) {
+  .faculty-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Two columns */
+    column-gap: 40px; /* Space between columns */
+    row-gap: 10px; /* Space between rows */
+  }
+}
+
+/* General FAQ Styles */
+.faq-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 40px;
+}
+
+.faq-left {
+  text-align: center;
+  flex: 1;
+}
+
+.faq-header {
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+.faq-image {
+ width: 100%;
+  max-width: 500px;
+  height: auto;
+  margin: 0 auto; /* Center the image horizontally */
+}
+
+.faq-right {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.faq-item {
+  border-bottom: 1px solid #ddd;
+  padding: 10px;
+}
+
+.faq-question {
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+}
+
+.faq-answer {
+  display: none;
+  padding: 10px;
+  color: #333;
+}
+
+.arrow {
+  font-size: 18px;
+}
+
+.faq-question:hover {
+  color: #4CAF50;
+}
+
+/* Show the answer when clicked */
+.faq-question.active + .faq-answer {
+  display: block;
+}
+
+/* Media Query for Small Screens */
+@media (max-width: 768px) {
+  .body{
+    overflow-x: hidden,
+  }
+  .faq-container {
+    flex-direction: column;
+    padding: 20px;
+  }
+
+  .faq-left {
+    margin-bottom: 20px;
+  }
+
+  .faq-header {
+    font-size: 1.5rem;
+  }
+
+  /* Increase the image size for mobile */
+  .faq-image {
+   max-width: 1000%; /* Limit image width to 1000% of its container */
+    margin: 0 auto; /* Center the image horizontally */
+    display: block; /* Ensure it behaves as a block-level element for centering */
+  }
+
+  .faq-right {
+    flex: none;
+    width: 100%; /* Ensure FAQ items take full width on mobile */
+    margin-left: 10px; /* Add some left margin for better alignment */
+  }
+
+  .faq-item {
+    padding: 15px; /* Increase padding for better spacing */
+    border: none; /* Remove border between FAQ items on smaller screens */
+  }
+
+  .faq-question {
+    font-size: 16px;
+    padding: 10px;
+  }
+
+  .faq-answer {
+    padding: 10px;
+    font-size: 14px;
+  }
+
+  /* Adjust alignment for mobile view */
+  .faq-question, .faq-answer {
+    margin-left: 20px; /* Add space on the left for alignment */
+  }
+
+  .faq-question {
+    font-size: 18px;
+    padding-left: 20px; /* Add padding to the left for mobile */
+  }
+}
+
+@media (max-width: 768px) {
+  .get-in-touch p {
+    font-size: 1rem; /* Adjust font size for smaller screens */
+    max-width: 90%; /* Allow paragraph to take up more space */
+  }
+
+  .get-in-touch h2 {
+    font-size: 1.5rem; /* Slightly smaller heading for mobile */
+  }
+
+  .whatsapp-link {
+    font-size: 1rem; /* Smaller font size for mobile */
+  }
+
+  .designer-button {
+    font-size: 1rem; /* Adjust button font size for mobile */
+    padding: 8px 16px; /* Adjust padding for mobile */
+  }
+
+  .footer-credit {
+    font-size: 0.9rem; /* Smaller font size for footer on mobile */
+  }
+
+  /* Ensure the WhatsApp icon and button are responsive */
+  .whatsapp-icon {
+    width: 25px; /* Adjust icon size for mobile */
+    height: 25px;
+  }
+  .home{
+    overflow-x: hidden;
+    max-width: 100%;
+  }
+  .menu {
+    position: absolute;
+    background: rgba(3, 39, 27, 0.938);
+    height: 100vh;
+    width: 200px;
+    top: 0;
+    right: -200px;
+    text-align: left;
+    z-index:2;
+    transition: 1s;
+    overflow-x: hidden;
+}
+  .footer-nav nav ul li a{
+    font-size: 13px;
+  }
+}
+
