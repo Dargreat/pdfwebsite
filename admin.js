@@ -125,14 +125,13 @@ async function fetchAndDisplayPDFs() {
 }
 
 window.onload = function() {
-    fetchAndDisplayPDFs();
-    (() => {
-        let localToken = localStorage.getItem('authToken');
-        if (!localToken || localToken == null || localToken == undefined) {
-            alert('Invalid or expired auth token');
-            window.location.href = '/login.html';
-            return;
-        }
-        token = localToken;
-    })();
-}
+    const localToken = localStorage.getItem('authToken');
+    if (!localToken) {
+        alert('Invalid or expired auth token');
+        window.location.href = '/login.html';
+        return;
+    }
+    // Ensure `token` is properly scoped (e.g., declared globally or within a module).
+    token = localToken; 
+    fetchAndDisplayPDFs(); // Assumes this function is defined and handles errors.
+};
