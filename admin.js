@@ -3,8 +3,8 @@ const uploadForm = document.getElementById('uploadForm');
 const pdfList = document.getElementById('pdfList');
 
 // const backendUrl = 'https://dargreat.vercel.app';
-// const backendUrl = 'https://backend-for-dragreat.onrender.com';
-const backendUrl = 'http://localhost:3000';
+const backendUrl = 'https://backend-for-dragreat.onrender.com';
+// const backendUrl = 'http://localhost:3000';
 let token = '';
 
 // Handle form submission
