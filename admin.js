@@ -1,107 +1,103 @@
 // Select elements from admin.html
 const uploadForm = document.getElementById('uploadForm');
+const pdfInput = document.getElementById('pdfInput');
 const pdfList = document.getElementById('pdfList');
 
 const backendUrl = 'https://backend-for-dragreat.onrender.com';
 let token = '';
 
-// Enhanced upload handler with debugging
+// Handle form submission
 uploadForm.addEventListener('submit', async (event) => {
     event.preventDefault();
 
+    const title = document.getElementById('pdfTitle').value.trim();
+    const pages = document.getElementById('pages').value.trim();
+    const fileInput = document.getElementById('pdfFile');
+    const file = fileInput.files[0];
+
+    if (!file) {
+        alert("Please select a PDF to upload.");
+        return;
+    }
+
+    if (file.type !== 'application/pdf') {
+        alert("Only PDF files are allowed.");
+        return;
+    }
+
     try {
-        // Collect form data
-        const title = document.getElementById('pdfTitle').value;
-        const pages = document.getElementById('pages').value;
-        const file = document.getElementById('pdfFile').files[0];
-
-        // Validation
-        if (!file) {
-            alert("Please select a PDF to upload.");
-            return;
-        }
-
-        console.log('Selected file:', {
-            name: file.name,
-            type: file.type,
-            size: file.size
-        });
-
-        if (file.type !== 'application/pdf') {
-            alert(`Invalid file type: ${file.type}. Only PDF files are allowed.`);
-            return;
-        }
-
-        // Prepare form data
         const formData = new FormData();
         formData.append('title', title);
         formData.append('pages', pages);
-        formData.append('file', file, file.name);
+        formData.append('file', file);
 
-        // Debug form data
-        console.log('FormData contents:');
-        for (let [key, value] of formData.entries()) {
-            console.log(key, value);
-        }
-
-        // Get authentication token
-        const token = localStorage.getItem('authToken');
-        if (!token) {
-            alert('Authentication required');
-            window.location.href = '/login.html';
-            return;
-        }
-
-        // Send request
-        console.log('Sending upload request...');
         const response = await fetch(`${backendUrl}/api/pdf/upload`, {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${token}`
+                // Note: Don't set 'Content-Type' when using FormData
             },
             body: formData,
         });
 
-        console.log('Response status:', response.status);
-        
-        // Handle response
-        if (!response.ok) {
-            const errorText = await response.text();
-            console.error('Upload failed:', {
-                status: response.status,
-                error: errorText
-            });
-            throw new Error(`Server error: ${response.status} - ${errorText}`);
+        const result = await response.json();
+
+        if (response.ok) {
+            alert('PDF uploaded successfully!');
+            fileInput.value = '';
+            fetchAndDisplayPDFs();
+        } else {
+            alert(`Error uploading PDF: ${result.message || 'Unknown error'}`);
         }
 
-        const result = await response.json();
-        console.log('Upload success:', result);
-        alert('PDF uploaded successfully!');
-        document.getElementById('pdfFile').value = "";
-        fetchAndDisplayPDFs();
     } catch (error) {
-        console.error("Full error details:", error);
-        alert(`Upload failed: ${error.message}`);
+        console.error("Upload failed:", error);
+        alert("Failed to upload PDF. Please try again.");
     }
 });
 
-// Enhanced PDF fetcher
-async function fetchAndDisplayPDFs() {
+// Delete a PDF
+async function deletePDF(pdfId) {
+    if (!confirm("Are you sure you want to delete? It can't be recovered unless re-uploaded.")) {
+        return;
+    }
+
     try {
-        console.log('Fetching PDF list...');
+        const response = await fetch(`${backendUrl}/api/pdf/delete/${pdfId}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+            alert("PDF deleted successfully!");
+            fetchAndDisplayPDFs();
+        } else {
+            alert(`Error: ${result.message || 'Unknown error'}`);
+        }
+
+    } catch (error) {
+        console.error("Delete failed:", error);
+        alert("Failed to delete PDF. Please try again.");
+    }
+}
+
+// Fetch and display PDFs
+async function fetchAndDisplayPDFs() {
+    pdfList.innerHTML = ''; // Clear list
+
+    try {
         const response = await fetch(`${backendUrl}/api/pdf`);
-        
-        console.log('Fetch response status:', response.status);
-        
         if (!response.ok) {
-            const errorText = await response.text();
-            throw new Error(`Failed to fetch PDFs: ${response.status} - ${errorText}`);
+            throw new Error('Failed to fetch PDFs');
         }
 
         const pdfs = await response.json();
-        console.log('Received PDFs:', pdfs);
 
-        pdfList.innerHTML = '';
         pdfs.forEach(pdf => {
             const listItem = document.createElement('li');
             listItem.innerHTML = `
@@ -110,10 +106,22 @@ async function fetchAndDisplayPDFs() {
             `;
             pdfList.appendChild(listItem);
         });
+
     } catch (error) {
-        console.error("Fetch error:", error);
-        alert("Failed to load PDFs. Check console for details.");
+        console.error("Fetch failed:", error);
+        alert("Unable to load PDFs. Please refresh the page.");
     }
 }
 
-// Rest of your code remains the same...
+// Check token on page load and fetch PDFs
+window.onload = function () {
+    const localToken = localStorage.getItem('authToken');
+    if (!localToken) {
+        alert('Invalid or expired auth token');
+        window.location.href = '/login.html';
+        return;
+    }
+
+    token = localToken;
+    fetchAndDisplayPDFs();
+};
