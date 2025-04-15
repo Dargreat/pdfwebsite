@@ -1,6 +1,5 @@
 // Select elements from admin.html
 const uploadForm = document.getElementById('uploadForm');
-const pdfInput = document.getElementById('pdfInput');
 const pdfList = document.getElementById('pdfList');
 
 const backendUrl = 'https://backend-for-dragreat.onrender.com';
@@ -35,12 +34,17 @@ uploadForm.addEventListener('submit', async (event) => {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${token}`
-                // Note: Don't set 'Content-Type' when using FormData
             },
             body: formData,
         });
 
-        const result = await response.json();
+        let result;
+        try {
+            result = await response.json();
+        } catch {
+            const errorText = await response.text();
+            result = { message: errorText };
+        }
 
         if (response.ok) {
             alert('PDF uploaded successfully!');
@@ -71,7 +75,13 @@ async function deletePDF(pdfId) {
             },
         });
 
-        const result = await response.json();
+        let result;
+        try {
+            result = await response.json();
+        } catch {
+            const errorText = await response.text();
+            result = { message: errorText };
+        }
 
         if (response.ok) {
             alert("PDF deleted successfully!");
@@ -88,7 +98,7 @@ async function deletePDF(pdfId) {
 
 // Fetch and display PDFs
 async function fetchAndDisplayPDFs() {
-    pdfList.innerHTML = ''; // Clear list
+    pdfList.innerHTML = '<li>Loading...</li>'; // Optional loading text
 
     try {
         const response = await fetch(`${backendUrl}/api/pdf`);
@@ -97,6 +107,7 @@ async function fetchAndDisplayPDFs() {
         }
 
         const pdfs = await response.json();
+        pdfList.innerHTML = ''; // Clear list
 
         pdfs.forEach(pdf => {
             const listItem = document.createElement('li');
