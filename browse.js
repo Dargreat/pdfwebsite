@@ -1,116 +1,151 @@
 const backendUrl = 'https://dargreat.vercel.app';
 
-// Set up the PDF.js worker
-pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.15.349/pdf.worker.min.js';
+// Main function to load and display PDFs
+async function loadPDFs() {
+    try {
+        const pdfs = await fetchPDFs();
+        renderPDFs(pdfs);
+    } catch (error) {
+        console.error('Failed to load PDFs:', error);
+        document.getElementById('pdf-list').innerHTML = 
+            '<p class="error">Failed to load PDFs. Please try again later.</p>';
+    }
+}
 
-// Function to fetch PDFs from Firestore
+// Fetch PDF data from backend
 async function fetchPDFs() {
-    try {
-        const response = await fetch(`${backendUrl}/api/pdf`);
-        
-        if (!response.ok) {
-            throw new Error('Failed to fetch PDFs');
-        }
-        
-        const pdfs = await response.json();
-        
-        if (pdfs.length === 0) {
-            displayNoPDFsFound();
-        } else {
-            renderPDFs(pdfs);
-        }
-    } catch (error) {
-        console.error('Error fetching PDFs:', error);
-        displayNoPDFsFound();
-    }
+    const response = await fetch(`${backendUrl}/api/pdf`);
+    if (!response.ok) throw new Error('Network response was not ok');
+    return await response.json();
 }
 
-// Function to display a message when no PDFs are found
-function displayNoPDFsFound() {
-    const pdfList = document.getElementById('pdf-list');
-    pdfList.innerHTML = '<p>No PDFs available at the moment.</p>';
-}
-
-// Function to render PDFs with thumbnails
+// Render PDF thumbnails
 function renderPDFs(pdfs) {
-    const pdfList = document.getElementById('pdf-list');
-    pdfList.innerHTML = ''; // Clear previous PDFs
+    const container = document.getElementById('pdf-list');
+    
+    if (!pdfs || pdfs.length === 0) {
+        container.innerHTML = '<p class="empty">No PDFs available at this time.</p>';
+        return;
+    }
 
-    pdfs.forEach(pdf => {
-        const pdfElement = document.createElement('div');
-        pdfElement.classList.add('pdf-item');
-        
-        const title = document.createElement('h3');
-        title.innerText = pdf.title;
-        
-        const thumbnail = document.createElement('canvas');
-        thumbnail.classList.add('pdf-thumbnail'); // Add styling class
-        
-        const downloadLink = document.createElement('a');
-        downloadLink.href = pdf.url;
-        downloadLink.target = '_blank';
-        downloadLink.innerText = 'Download';
-        downloadLink.classList.add('download-button');
+    container.innerHTML = ''; // Clear previous content
 
-        pdfElement.appendChild(thumbnail); // Add canvas (thumbnail)
-        pdfElement.appendChild(title);
-        pdfElement.appendChild(downloadLink);
-        pdfList.appendChild(pdfElement);
-
-        // Render the thumbnail using PDF.js
-        renderPDFThumbnail(pdf.url, thumbnail);
+    pdfs.forEach((pdf, index) => {
+        const pdfElement = createPDFElement(pdf, index);
+        container.appendChild(pdfElement);
     });
 }
 
-// Function to render the first page of a PDF as a thumbnail using PDF.js
-async function renderPDFThumbnail(pdfUrl, canvas) {
-    try {
-        const pdf = await pdfjsLib.getDocument(pdfUrl).promise;
-        const page = await pdf.getPage(1); // Render the first page
+// Create individual PDF element with iframe preview
+function createPDFElement(pdf, index) {
+    const pdfElement = document.createElement('div');
+    pdfElement.className = 'pdf-item';
+    pdfElement.dataset.id = `pdf-${index}`;
 
-        const viewport = page.getViewport({ scale: 0.5 }); // Scale the thumbnail
-        const context = canvas.getContext('2d');
-        canvas.width = viewport.width;
-        canvas.height = viewport.height;
+    const title = document.createElement('h3');
+    title.textContent = pdf.title || `Document ${index + 1}`;
+    pdfElement.appendChild(title);
 
-        const renderContext = {
-            canvasContext: context,
-            viewport: viewport,
+    const previewsContainer = document.createElement('div');
+    previewsContainer.className = 'previews-container';
+
+    pdf.urls.forEach((url, urlIndex) => {
+        const previewWrapper = document.createElement('div');
+        previewWrapper.className = 'preview-wrapper';
+
+        // Create iframe for PDF preview
+        const iframe = document.createElement('iframe');
+        iframe.src = `${url}#view=fitH&toolbar=0&navpanes=0`;
+        iframe.className = 'pdf-preview';
+        iframe.title = `Preview of ${pdf.title || 'PDF'} ${urlIndex + 1}`;
+        iframe.setAttribute('loading', 'lazy');
+        
+        // Fallback for iframes that don't load
+        iframe.onerror = () => {
+            iframe.replaceWith(createFallbackElement(url, pdf.title, urlIndex));
         };
-        await page.render(renderContext).promise;
-    } catch (error) {
-        console.error('Error rendering PDF thumbnail:', error);
-    }
-}
 
-// Function to filter PDFs based on search input (search bar or URL parameter)
-function searchPDFs(query) {
-    const pdfItems = document.querySelectorAll('.pdf-item');
-    pdfItems.forEach(item => {
-        const title = item.querySelector('h3').innerText.toLowerCase();
-        if (title.includes(query)) {
-            item.style.display = 'block';
-        } else {
-            item.style.display = 'none';
-        }
+        previewWrapper.appendChild(iframe);
+        previewWrapper.appendChild(createDownloadButton(url, pdf.title, urlIndex));
+        previewsContainer.appendChild(previewWrapper);
     });
+
+    pdfElement.appendChild(previewsContainer);
+    return pdfElement;
 }
 
-// Function to get the search query from URL parameters
-function getSearchQueryFromURL() {
-    const urlParams = new URLSearchParams(window.location.search);
-    return urlParams.get('search');  // Returns the value of 'search' parameter
+// Create fallback element when iframe fails
+function createFallbackElement(url, title, index) {
+    const fallback = document.createElement('div');
+    fallback.className = 'pdf-fallback';
+    
+    const icon = document.createElement('div');
+    icon.className = 'pdf-icon';
+    icon.innerHTML = '📄';
+    
+    const text = document.createElement('p');
+    text.textContent = 'PDF Preview';
+    
+    fallback.appendChild(icon);
+    fallback.appendChild(text);
+    fallback.onclick = () => window.open(url, '_blank');
+    
+    return fallback;
 }
 
-// Fetch and display PDFs when the page loads
-window.onload = async function() {
-    // Fetch and display PDFs
-    await fetchPDFs();
+// Create download button
+function createDownloadButton(url, title, index) {
+    const button = document.createElement('button');
+    button.className = 'download-btn';
+    button.textContent = `Download ${index + 1}`;
+    
+    button.addEventListener('click', async (e) => {
+        e.preventDefault();
+        await downloadPDF(url, `${title || 'document'}-${index + 1}.pdf`);
+    });
+    
+    return button;
+}
 
-    // If there is a search query in the URL, trigger the search
-    const searchQuery = getSearchQueryFromURL();
-    if (searchQuery) {
-        searchPDFs(searchQuery.toLowerCase());
+// Download PDF function
+async function downloadPDF(url, filename) {
+    try {
+        const button = event.target;
+        const originalText = button.textContent;
+        
+        // Update button state
+        button.disabled = true;
+        button.textContent = 'Downloading...';
+        
+        // Fetch the PDF
+        const response = await fetch(url);
+        if (!response.ok) throw new Error('Failed to download');
+        
+        // Create download
+        const blob = await response.blob();
+        const blobUrl = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = blobUrl;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        
+        // Clean up
+        setTimeout(() => {
+            document.body.removeChild(a);
+            URL.revokeObjectURL(blobUrl);
+            button.textContent = originalText;
+            button.disabled = false;
+        }, 100);
+    } catch (error) {
+        console.error('Download failed:', error);
+        event.target.textContent = 'Error! Try again';
+        setTimeout(() => {
+            event.target.textContent = 'Download';
+            event.target.disabled = false;
+        }, 2000);
     }
-};
+}
 
+// Initialize when DOM is loaded
+document.addEventListener('DOMContentLoaded', loadPDFs);

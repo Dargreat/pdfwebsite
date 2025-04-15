@@ -78,6 +78,99 @@ body, html {
     margin-top: 5px;
 }
 
+
+
+
+
+
+
+
+
+.pdf-item {
+    border: 1px solid #e1e1e1;
+    border-radius: 8px;
+    padding: 15px;
+    margin: 15px 0;
+    background: white;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.pdf-previews {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin: 15px 0;
+}
+
+.pdf-preview-container {
+    width: 200px;
+    height: 280px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+}
+
+.pdf-preview {
+    width: 100%;
+    height: 100%;
+    pointer-events: none; /* Disable interaction */
+}
+
+/* Hide scrollbars */
+.pdf-preview::-webkit-scrollbar {
+    display: none;
+}
+.pdf-preview {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.download-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.download-btn {
+    padding: 8px 16px;
+    background: #4285f4;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s;
+}
+
+.download-btn:hover {
+    background: #3367d6;
+}
+
+.download-btn:disabled {
+    background: #cccccc;
+    cursor: not-allowed;
+}
+
+#pdf-list {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+
+
+
+
+
+
+
+
+
+
 /* Browse PDFs Section Styling */
 .browse-pdfs {
     display: flex;
