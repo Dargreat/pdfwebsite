@@ -3,9 +3,7 @@ const uploadForm = document.getElementById('uploadForm');
 const pdfInput = document.getElementById('pdfInput');
 const pdfList = document.getElementById('pdfList');
 
-// const backendUrl = 'https://dargreat.vercel.app';
 const backendUrl = 'https://backend-for-dragreat.onrender.com';
-// const backendUrl = 'http://localhost:3000';
 let token = '';
 
 // Fetch and display PDFs on page load
@@ -22,68 +20,41 @@ uploadForm.addEventListener('submit', async (event) => {
         return;
     }
 
-    // Check if the file is a PDF
     if (file.type !== 'application/pdf') {
         alert("Only PDF files are allowed.");
         return;
     }
 
     try {
-        // Split the PDF into chunks
-        const chunks = await splitPDFIntoChunks(file, 10 * 1024 * 1024); // 10 MB per chunk
+        const formData = new FormData();
+        formData.append('title', title);
+        formData.append('pages', pages);
+        formData.append('file', file);
 
-        // Upload each chunk
-        for (let i = 0; i < chunks.length; i++) {
-            // Ensure each chunk is encoded in UTF-8
-            const utf8Chunk = new Blob([new Uint8Array(chunks[i])], { type: 'application/pdf' });
+        const response = await fetch(`${backendUrl}/api/pdf/upload`, {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            },
+            body: formData,
+        });
 
-            const formData = new FormData();
-            formData.append('title', `${title} - Chunk ${i + 1}`);
-            formData.append('pages', pages);
-            formData.append('file', utf8Chunk);
-
-            // Send the form data to the backend
-            const response = await fetch(`${backendUrl}/api/pdf/upload`, {
-                method: 'POST',
-                headers: {
-                    'Authorization': `Bearer ${token}` // Authorization header
-                },
-                body: formData, // FormData object
-            });
-
-            const result = await response.json();
-            if (response.ok) {
-                alert(`Chunk ${i + 1} uploaded successfully!`);
-            } else {
-                alert(`Error uploading chunk ${i + 1}: ${result.message}`);
-            }
+        const result = await response.json();
+        
+        if (response.ok) {
+            alert('PDF uploaded successfully!');
+            fileInput.value = "";
+            fetchAndDisplayPDFs();
+        } else {
+            alert(`Error uploading PDF: ${result.message}`);
         }
-
-        fileInput.value = "";
-        fetchAndDisplayPDFs();
     } catch (error) {
         console.error("Upload failed:", error);
         alert("Failed to upload PDF. Please try again.");
     }
 });
 
-// Function to split PDF file into chunks of a specific size (in bytes)
-async function splitPDFIntoChunks(file, chunkSize) {
-    const arrayBuffer = await file.arrayBuffer();
-    const totalChunks = Math.ceil(arrayBuffer.byteLength / chunkSize);
-
-    const chunks = [];
-    for (let i = 0; i < totalChunks; i++) {
-        const start = i * chunkSize;
-        const end = Math.min((i + 1) * chunkSize, arrayBuffer.byteLength);
-        const chunk = arrayBuffer.slice(start, end);
-        chunks.push(chunk);
-    }
-
-    return chunks;
-}
-
-// Delete a PDF
+// Delete a PDF (unchanged)
 async function deletePDF(pdfId) {
     if (!confirm("Are you sure you want to delete? It can't be recovered unless re-uploaded.")) {
         return;
@@ -108,7 +79,7 @@ async function deletePDF(pdfId) {
     }
 }
 
-// Fetch PDFs from backend and display them
+// Fetch PDFs from backend and display them (unchanged)
 async function fetchAndDisplayPDFs() {
     pdfList.innerHTML = ''; // Clear existing list
 
@@ -142,7 +113,6 @@ window.onload = function() {
         window.location.href = '/login.html';
         return;
     }
-    // Ensure `token` is properly scoped (e.g., declared globally or within a module).
     token = localToken; 
-    fetchAndDisplayPDFs(); // Assumes this function is defined and handles errors.
+    fetchAndDisplayPDFs();
 };
