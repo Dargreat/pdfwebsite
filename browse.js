@@ -1,4 +1,7 @@
-const backendUrl = 'https://dargreat.vercel.app';
+// const backendUrl = 'https://dargreat.vercel.app';
+const backendUrl = 'https://backend-for-dragreat.onrender.com';
+// const backendUrl = 'http://localhost:3000';
+
 
 // Main function to load and display PDFs
 async function loadPDFs() {

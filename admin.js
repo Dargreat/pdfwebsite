@@ -109,6 +109,8 @@ async function fetchAndDisplayPDFs() {
         }
 
         const pdfs = await response.json();
+        console.log(pdfs);
+
         pdfList.innerHTML = ''; // Clear list
 
         pdfs.forEach(pdf => {
