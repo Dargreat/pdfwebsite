@@ -152,3 +152,91 @@ async function downloadPDF(url, filename) {
 
 // Initialize when DOM is loaded
 document.addEventListener('DOMContentLoaded', loadPDFs);
+
+
+// Enhanced Search Functionality
+function searchPDFs() {
+    const query = document.getElementById('search-bar').value.trim().toLowerCase();
+    
+    if (query === "") {
+        // If search is empty, show all PDFs
+        displayAllPDFs();
+        return;
+    }
+
+    // Get all PDF items
+    const pdfItems = document.querySelectorAll('.pdf-item');
+    let foundResults = false;
+
+    pdfItems.forEach(item => {
+        const pdfName = item.querySelector('h3').textContent.toLowerCase();
+        const pdfCourse = item.querySelector('p') ? item.querySelector('p').textContent.toLowerCase() : '';
+        
+        // Check if query matches name or course
+        if (pdfName.includes(query) || pdfCourse.includes(query)) {
+            item.style.display = 'flex'; // Show matching items
+            foundResults = true;
+        } else {
+            item.style.display = 'none'; // Hide non-matching items
+        }
+    });
+
+    // Show "no results" message if nothing found
+    const noResultsMsg = document.getElementById('no-results');
+    if (!foundResults) {
+        if (!noResultsMsg) {
+            const msg = document.createElement('p');
+            msg.id = 'no-results';
+            msg.className = 'no-results';
+            msg.textContent = 'No matching PDFs found';
+            document.getElementById('pdf-list').appendChild(msg);
+        }
+    } else if (noResultsMsg) {
+        noResultsMsg.remove();
+    }
+}
+
+// Function to display all PDFs (used when clearing search)
+function displayAllPDFs() {
+    const pdfItems = document.querySelectorAll('.pdf-item');
+    pdfItems.forEach(item => {
+        item.style.display = 'flex';
+    });
+    
+    const noResultsMsg = document.getElementById('no-results');
+    if (noResultsMsg) {
+        noResultsMsg.remove();
+    }
+}
+
+// Toggle FAQ answer function (unchanged from your original)
+function toggleAnswer(element) {
+    const answer = element.nextElementSibling;
+    const arrow = element.querySelector('.arrow');
+
+    // Toggle the display of the answer
+    answer.style.display = answer.style.display === 'block' ? 'none' : 'block';
+    
+    // Rotate arrow icon
+    if (arrow) {
+        arrow.style.transform = answer.style.display === 'block' ? 'rotate(90deg)' : 'rotate(0)';
+    }
+}
+
+// Add event listener for search input with debounce
+let searchTimer;
+document.getElementById('search-bar').addEventListener('input', function() {
+    clearTimeout(searchTimer);
+    searchTimer = setTimeout(searchPDFs, 300); // 300ms delay after typing stops
+});
+
+// Handle URL search parameter on page load
+window.addEventListener('DOMContentLoaded', function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const searchParam = urlParams.get('search');
+    
+    if (searchParam) {
+        document.getElementById('search-bar').value = searchParam;
+        searchPDFs();
+    }
+});
