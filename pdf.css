@@ -1,4 +1,21 @@
 
+.avbsub h1{
+  font-size: 45px;
+  margin-bottom: 0%;
+  text-align: center;
+}
+
+.avbsub h5{
+  text-align: center;
+  margin-top: 0%;
+  font-size: 15px;
+}
+
+.avbsub p{
+  text-align: center;
+  font-size: 15px;
+}
+
 /* Container for the section */
 .how-it-works {
   display: flex;
