@@ -173,14 +173,22 @@
   </nav>
 </footer>
 <script>
-  
-  var menu = document.getElementById("menu")
-  function showMenu (){
-      menu.style.right ="0";
-  }
-  function hideMenu (){
-      menu.style.right ="-200px";
-  }
+<script>
+        function showMenu() {
+            document.getElementById("menu").classList.add("active");
+        }
+
+        function hideMenu() {
+            document.getElementById("menu").classList.remove("active");
+        }
+
+        function handleSearch(event) {
+            if (event.key === "Enter") {
+                window.location.href = "browse.html?query=" + 
+                    encodeURIComponent(event.target.value);
+            }
+        }
+    </script>
 
 </script>
 </body>
