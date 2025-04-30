@@ -1,26 +1,39 @@
+<script>
+// Menu Toggle Functions
+function showMenu() {
+    document.getElementById("menu").classList.add("active");
+}
 
-  // Capture the Enter key and redirect to browse.html with search query
-  function handleSearch(event) {
-    if (event.key === 'Enter') {
-      let searchQuery = document.getElementById("searchQuery").value;
-      if (searchQuery) {
-        // Redirect to browse.html and append the search query as a URL parameter
-        window.location.href = `browse.html?search=${encodeURIComponent(searchQuery)}`;
-      }
+function hideMenu() {
+    document.getElementById("menu").classList.remove("active");
+}
+
+// Search Functionality
+function handleSearch(event) {
+    if (event.key === "Enter") {
+        const searchQuery = document.getElementById("searchQuery").value;
+        if (searchQuery.trim()) {
+            window.location.href = `browse.html?query=${encodeURIComponent(searchQuery.trim())}`;
+        }
     }
-  }
-// Toggle the FAQ answer display and arrow direction
+}
+
+// FAQ Toggle Function
 function toggleAnswer(element) {
     const answer = element.nextElementSibling;
     const arrow = element.querySelector('.arrow');
-
-    // Toggle the display of the answer using classList for better flexibility
-    answer.classList.toggle('show'); // Assuming 'show' class sets display: block;
     
-    // Toggle the arrow direction
-    arrow.classList.toggle('up');
+    // Toggle answer visibility
+    answer.classList.toggle('active');
+    
+    // Toggle arrow rotation
+    arrow.classList.toggle('rotated');
+    
+    // Smooth height transition
+    if (answer.style.maxHeight) {
+        answer.style.maxHeight = null;
+    } else {
+        answer.style.maxHeight = answer.scrollHeight + "px";
+    }
 }
-
-
-  
-  
+</script>
