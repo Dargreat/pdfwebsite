@@ -858,3 +858,234 @@ nav .fa{
         .fa-window-close:hover {
             transform: rotate(90deg);
         }
+
+
+
+
+
+
+
+
+        .home {
+            min-height: 100vh;
+            display: grid;
+            grid-template-columns: 1fr;
+            align-content: start;
+            padding: 2rem 5%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .navbar {
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            align-items: center;
+            gap: 2rem;
+            padding: 1.5rem 0;
+            position: relative;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--primary);
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        .logo::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60%;
+            height: 3px;
+            background: var(--secondary);
+        }
+
+        .menu {
+            justify-self: end;
+            display: flex;
+            gap: 2rem;
+            transition: transform 0.3s ease;
+        }
+
+        .menu ul {
+            display: flex;
+            gap: 2rem;
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .menu a {
+            color: #2D3436;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .menu a:hover {
+            color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .menu a::before {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        .menu a:hover::before {
+            width: 100%;
+        }
+
+        .hero {
+            margin-top: 10vh;
+            display: grid;
+            gap: 2rem;
+            text-align: center;
+            position: relative;
+            padding: 4rem 0;
+        }
+
+        .bigtext {
+            font-size: 4.5rem;
+            margin: 0;
+            line-height: 1;
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .smalltext {
+            font-size: 1.5rem;
+            color: var(--primary);
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+            padding: 1rem 2rem;
+        }
+
+        .smalltext::before,
+        .smalltext::after {
+            content: '✦';
+            position: absolute;
+            color: var(--secondary);
+            font-size: 1.2rem;
+        }
+
+        .smalltext::before { left: 0; top: 0; }
+        .smalltext::after { right: 0; bottom: 0; }
+
+        .search-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            position: relative;
+        }
+
+        .search-bar {
+            width: 100%;
+            padding: 1.5rem 2rem;
+            border: none;
+            border-radius: 1.5rem;
+            background: white;
+            box-shadow: 0 10px 30px rgba(13, 172, 119, 0.1);
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+
+        .search-bar:focus {
+            outline: none;
+            box-shadow: 0 15px 40px rgba(13, 172, 119, 0.2);
+            transform: scale(1.02);
+        }
+
+        .fa-bars {
+            display: none;
+            color: var(--primary);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        @media (max-width: 768px) {
+            .menu {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                height: 100vh;
+                width: 70%;
+                background: white;
+                flex-direction: column;
+                padding: 6rem 2rem;
+                box-shadow: -5px 0 20px rgba(0,0,0,0.05);
+            }
+
+            .menu.active {
+                right: 0;
+            }
+
+            .menu ul {
+                flex-direction: column;
+                gap: 2rem;
+            }
+
+            .fa-bars {
+                display: block;
+            }
+
+            .bigtext {
+                font-size: 3rem;
+            }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .fa-window-close {
+            color: var(--secondary);
+            position: absolute;
+            right: 2rem;
+            top: 2rem;
+            cursor: pointer;
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .fa-window-close:hover {
+            transform: rotate(180deg);
+        }
+
+        .deco-circle {
+            position: absolute;
+            background: rgba(78, 205, 196, 0.1);
+            border-radius: 50%;
+            z-index: -1;
+        }
+
+        .deco-circle:nth-child(1) {
+            width: 400px;
+            height: 400px;
+            top: -100px;
+            left: -100px;
+        }
+
+        .deco-circle:nth-child(2) {
+            width: 300px;
+            height: 300px;
+            bottom: -50px;
+            right: -100px;
+        }
