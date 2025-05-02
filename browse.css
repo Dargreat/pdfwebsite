@@ -28,6 +28,7 @@ body {
   min-height: 100vh; 
   position: relative; 
   overflow: hidden; 
+  background: var(--cream); /* Added cream background */
 }
 
 .fluid-bg {
@@ -125,22 +126,67 @@ body {
   left: 0; 
 }
 
+/* Hamburger icons - hidden by default */
 .fa-bars,
 .fa-times {
   display: none !important;
-  position: fixed;
-  top: 1.5rem;
-  right: 1.5rem;
-  z-index: 1001;
-  background: white;
-  color: var(--fresh-green) !important;
-  padding: 0.8rem;
-  border-radius: 50%;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  cursor: pointer;
-  transition: transform .2s;
 }
 
+/* Hero Section */
+.hero {
+  margin-top: 20vh;
+  text-align: center;
+  padding: 2rem;
+  animation: contentEntrance 1s ease-out;
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes contentEntrance {
+  0%   { opacity:0; transform:translateY(20px); }
+  100% { opacity:1; transform:translateY(0); }
+}
+
+.bigtext {
+  font-size: 4rem;
+  color: var(--deep-green); /* Changed to green */
+  font-weight: 700;
+  line-height: 1.1;
+  text-shadow: 2px 2px 4px var(--shadow);
+  margin-bottom: 1rem;
+}
+
+.smalltext {
+  font-size: 1.3rem;
+  color: var(--fresh-green); /* Changed to green */
+  margin-bottom: 2rem;
+  letter-spacing: .5px;
+}
+
+.search-container {
+  max-width: 600px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+}
+
+.search-bar {
+  width: 100%;
+  padding: 1.2rem 2rem;
+  border: 2px solid var(--fresh-green);
+  border-radius: 50px;
+  font-size: 1rem;
+  background: rgba(255,255,255,0.9);
+  transition: all .3s;
+}
+
+.search-bar:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(0,200,151,0.2);
+  transform: scale(1.02);
+}
+
+/* Mobile Styles */
 @media (max-width: 768px) {
   .navbar { 
     padding: 1rem 3%; 
@@ -153,10 +199,9 @@ body {
     height: 100vh;
     width: 75%;
     flex-direction: column;
-    background: rgba(253,250,246,0.98) !important;
+    background: rgba(253,250,246,0.98);
     padding: 3rem 1.5rem;
     transition: right .3s;
-    z-index: 1000;
   }
 
   .menu.active { 
@@ -166,6 +211,15 @@ body {
   .fa-bars,
   .fa-times {
     display: block !important;
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: white;
+    color: var(--fresh-green) !important;
+    padding: .6rem;
+    border-radius: 50%;
+    filter: drop-shadow(0 0 3px rgba(0,0,0,0.2));
+    cursor: pointer;
     font-size: 1.8rem;
   }
 
@@ -195,9 +249,11 @@ body {
     font-size: 1rem; 
     margin-bottom: 1rem; 
   }
+
+  .search-bar { 
+    padding: .8rem 1rem; 
+  }
 }
-
-
 
 
 
