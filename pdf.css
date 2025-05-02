@@ -661,3 +661,304 @@ nav .fa{
     font-size: 13px;
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.pdf-item {
+    border: 1px solid #e1e1e1;
+    border-radius: 8px;
+    padding: 15px;
+    margin: 15px 0;
+    background: white;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.pdf-previews {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin: 15px 0;
+}
+
+.pdf-preview-container {
+    width: 200px;
+    height: 280px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+}
+
+.pdf-preview {
+    width: 100%;
+    height: 100%;
+    pointer-events: none; /* Disable interaction */
+}
+
+/* Hide scrollbars */
+.pdf-preview::-webkit-scrollbar {
+    display: none;
+}
+.pdf-preview {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.download-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.download-btn {
+    padding: 8px 16px;
+    background: #4285f4;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s;
+}
+
+.download-btn:hover {
+    background: #3367d6;
+}
+
+.download-btn:disabled {
+    background: #cccccc;
+    cursor: not-allowed;
+}
+
+#pdf-list {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+
+
+
+
+
+
+
+
+
+
+/* Browse PDFs Section Styling */
+.browse-pdfs {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+    background-color: #f9f9f9;
+    margin-top: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    min-height: 60vh;
+    width: 100%; /* Ensure full width */
+    text-align: center;
+}
+
+/* Title Styling */
+.browse-title {
+    font-size: 50px;
+    color: #333;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+/* Search Bar Section Styling */
+.search-section {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+#search-bar {
+    padding: 12px 20px;
+    width: 100%;
+    max-width: 600px;
+    border-radius: 50px;
+    border: 1px solid #ddd;
+    font-size: 16px;
+    outline: none;
+    transition: border-color 0.3s;
+    background-color: #fff;
+}
+
+#search-bar:focus {
+    border-color: rgba(13, 172, 119, 0.938);
+}
+
+/* PDF List Styling */
+#pdf-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    margin-top: 30px;
+}
+
+/* Optional: PDF Item Styling */
+.pdf-item {
+    width: 80%;
+    max-width: 600px;
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    text-align: left;
+}
+
+.pdf-item h4 {
+    font-size: 22px;
+    color: #333;
+}
+
+.pdf-item button {
+    padding: 10px 20px;
+    background-color: rgba(13, 172, 119, 0.938);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s, transform 0.2s ease-in-out;
+}
+
+.pdf-item button:hover {
+    background-color: rgba(13, 172, 119, 1);
+    transform: scale(1.05);
+}
+
+.pdf-item button:active {
+    transform: scale(1);
+}
+
+
+
+.pdf-thumbnail {
+    display: block;
+    margin: 0 auto;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 160px;
+    height: 80px;
+}
+.pdf-item {
+    text-align: center;
+    margin-bottom: 20px;
+}
+.download-button {
+    margin-top: 10px;
+    display: inline-block;
+    background-color: rgba(13, 172, 119, 0.938);
+    color: white;
+    padding: 5px 10px;
+    text-decoration: none;
+    border-radius: 4px;
+}
+
+
+@media(max-width:768px){
+    .menu ul li{
+      display: block;
+    }
+    .menu{
+      position: absolute;
+      background:rgba(3, 39, 27, 0.938);
+      height: 100vh;
+      width:200px;
+      top: 0;
+      right: -200px;
+      text-align: left;
+      z-index:2;
+      transition: 1s;
+    }
+    nav .fa{
+      display: block;
+      color: #fff;
+      margin: 10px;
+      font-size: 22px;
+      cursor: pointer;
+    }
+    .navbar .menu a{
+      font-size: 15px;
+      justify-content: center;
+      text-align: center;
+      margin: auto;
+    }
+    .bigtext{
+      font-size: 60px;
+    }
+    .smalltext{
+      font-size: 15px;
+    }
+    .browse-title{
+        font-size: 40px;
+    }
+    #search-bar {
+        padding: 10px 12px;
+        width: 100%;
+        max-width: 200px;
+        border-radius: 50px;
+        border: 1px solid #ddd;
+        font-size: 10px;
+        outline: none;
+        transition: border-color 0.3s;
+        background-color: #fff;
+    }
+    .browse-pdfs{
+        justify-content: center;
+      text-align: center;
+      margin: auto;
+    }
+}
