@@ -179,20 +179,35 @@
 </footer>
 <script>
 <script>
-        function showMenu() {
-            document.getElementById("menu").classList.add("active");
-        }
+       const menu = document.getElementById('menu');
+    const hambutton = document.getElementById('hamburgerBtn');
+    const closebutton = document.getElementById('closeBtn');
 
-        function hideMenu() {
-            document.getElementById("menu").classList.remove("active");
-        }
+    // Toggle menu and buttons
+    function toggleMenu() {
+      menu.classList.toggle('active');
+      document.body.style.overflow = menu.classList.contains('active') ? 'hidden' : 'auto';
+    }
 
-        function handleSearch(event) {
-            if (event.key === "Enter") {
-                window.location.href = "browse.html?query=" + 
-                    encodeURIComponent(event.target.value);
-            }
-        }
+    // Event listeners
+    hambutton.addEventListener('click', toggleMenu);
+    closebutton.addEventListener('click', toggleMenu);
+
+    // Close menu on outside click
+    document.addEventListener('click', (e) => {
+      if (!menu.contains(e.target) && !hambutton.contains(e.target)) {
+        menu.classList.remove('active');
+        document.body.style.overflow = 'auto';
+      }
+    });
+
+    // Search handler
+    function handleSearch(e) {
+      if (e.key === 'Enter') {
+        const q = e.target.value.trim();
+        if (q) window.location.href = `browse.html?search=${encodeURIComponent(q)}`;
+      }
+    }
     </script>
 
 </script>
