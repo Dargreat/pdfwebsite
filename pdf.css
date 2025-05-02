@@ -171,7 +171,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 30px;
+  margin-top: 50px;
   flex-direction: column;
 }
 
@@ -234,7 +234,7 @@ h1 {
 /* Set the background section */
 .how-it-works{
   position: relative; /* To position the overlay relative to the section */
-  height: 400px; /* Adjust the height of the section */
+  height: 500px; /* Adjust the height of the section */
   background-image: url('howitworks.png.webp'); /* Path to your image */
   background-size: cover; /* Ensures the image covers the whole section */
   background-position: center; /* Centers the image */
