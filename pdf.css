@@ -656,18 +656,7 @@ nav .fa{
     overflow-x: hidden;
     max-width: 100%;
   }
-  .menu {
-    position: absolute;
-    background: rgba(3, 39, 27, 0.938);
-    height: 100vh;
-    width: 200px;
-    top: 0;
-    right: -200px;
-    text-align: left;
-    z-index:2;
-    transition: 1s;
-    overflow-x: hidden;
-}
+
   .footer-nav nav ul li a{
     font-size: 13px;
   }
